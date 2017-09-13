@@ -107,6 +107,35 @@
 
     - Object.assign()
 
+		> es6语法,copy可枚举的属性，也是一种浅copy
+
+		```js
+			Object.assign(target, ...sources);
+		```
+
     - _clone
 
-    - extends
+		> lodash方法,默认浅copy,第二个参数可以设置深浅
+
+		```js
+			_clone(value, [isDeep], [customizer], [thisArg]);
+		```
+	
+	- _cloneDeep
+		
+		> lodash方法，深copy
+
+		```js
+			_cloneDeep(value, [customizer], [thisArg]);
+		```
+
+    - extend
+
+		> jquery方法，第一个参数可以设置是否深浅copy
+
+		```js
+			jQuery.extend(true, { a : { a : "a" } }, { a : { b : "b" } } );
+			jQuery.extend( { a : { a : "a" } }, { a : { b : "b" } } );
+		```
+
+	- ...后续想到了，再加....	
