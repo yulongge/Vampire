@@ -1,0 +1,24 @@
+{
+  "name": "vampire",
+  "version": "1.0.0",
+  "description": "npm package",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yulongge/Vampire.git"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "es6"
+  ],
+  "author": "geyulong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yulongge/Vampire/issues"
+  },
+  "homepage": "https://github.com/yulongge/Vampire#readme"
+}
