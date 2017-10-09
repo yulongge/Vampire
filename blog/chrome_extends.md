@@ -29,8 +29,6 @@
     ├ demo.js //一个或多个js文件,popup面板加载的js脚本文件
     ├ popup.css //popup面板加载的js脚本文件
     ├ ... //需要的任何其他文件,比如图片icon.png
-
-
 ```
 
  当您编写您的扩展程序时，您将所有这些文件放在一个文件夹中。当您发布您的扩展程序时，该文件夹的内容将被压缩成一个特殊的 ZIP 文件，以 .crx 为后缀。如果您通过 Chrome 开发者信息中心上传您的扩展程序，该 .crx 文件会自动为您创建
@@ -41,86 +39,96 @@
 ##### manifest.json
 
 > 每一个扩展程序、可安装的网络应用以及主题背景都有一个 JSON 格式的清单文件，名为 manifest.json，提供重要信息,
-包含一些属性，如您的扩展程序的名称与描述、它的版本号等等。从更高的层次来看，我们将使用它来向 Chrome 浏览器声明扩展程序将会做什么，以及为了完成这些任务所需要的权限。
+包含一些属性，如您的扩展程序的名称与描述、它的版本号等等。从更高的层次来看，我们将使用它来向 Chrome 浏览器声明扩展程序将会做什么，以及为了完成这些任务所需要的权限
 
-```shell
+
+```js
 {
   // Required 必须要求部分
 
-  #  manifest 版本从 chrome 18 之后都应该是 2, 此处不需要变化
+  //manifest 版本从 chrome 18 之后都应该是 2, 此处不需要变化
   "manifest_version": 2,
-  # 名字是插件主要的 identifier
+
+  //名字是插件主要的 identifier
   "name": "My Extension",
-  # 插件版本号, string, 最多为4个以 dot 分开的
-  # interger, e.g. "3.1.2.4567"
-  # 版本号不能随意乱写,
-  # chrome 的自动更新系统会根据版本号判断是否需要将插件更新至新的版本
+
+  //插件版本号, string, 最多为4个以 dot 分开的
+  //interger, e.g. "3.1.2.4567"
+  //版本号不能随意乱写,
+  //chrome 的自动更新系统会根据版本号判断是否需要将插件更新至新的版本
   "version": "1.0.3",
 
-  // Recommended
+  //Recommended
 
-  # 如果需要指定不同 locale 使用不同的资源文件,
-  # 例如在中国显示中文, 在日本显示为日语等
-  # 则会在根目录中添加 `_locale` 文件夹;
-  # 若没有 `_locale` 文件夹, 则不能出现该项配置
+  //如果需要指定不同 locale 使用不同的资源文件,
+  //例如在中国显示中文, 在日本显示为日语等
+  //则会在根目录中添加 `_locale` 文件夹;
+  //若没有 `_locale` 文件夹, 则不能出现该项配置
   "default_locale": "en",
-  # 描述插件是干啥的,
-  # 描述需要适合在 chrome web store 上显示
+
+  //描述插件是干啥的,
+  //描述需要适合在 chrome web store 上显示
   "description": "A plain text description",
-  # 图标可以是1个, 或者多个
-  # 一般来说最好的方案是提供3个:
-  # - 128x128: 在从 chrome web store 安装的过程中需要使用,
-  # - 48x48: chrome://extensions 插件管理页面中使用
-  # - 16x16: 插件页面当做 favicon 使用
+
+  //图标可以是1个, 或者多个
+  //一般来说最好的方案是提供3个:
+  //- 128x128: 在从 chrome web store 安装的过程中需要使用,
+  //- 48x48: chrome://extensions 插件管理页面中使用
+  //- 16x16: 插件页面当做 favicon 使用
   "icons": {
       "16": "icon16.png",
       "48": "icon48.png",
       "128": "icon128.png"
   },
 
-  // Pick one (or none) - browser_action / page_action
+  //Pick one (or none) - browser_action / page_action
 
-  # 如果有 browser_action,
-  # 即在 chrome toolbar 的右边添加了一个 icon
-  # 参考 https://developer.chrome.com/extensions/browserAction
+  //如果有 browser_action,
+  //即在 chrome toolbar 的右边添加了一个 icon
+  //参考 https://developer.chrome.com/extensions/browserAction
   "browser_action": {
-      # icon 是随意提供多少个,
-      # chrome 选取最接近的尺寸, 为了适配不同屏幕,
-      # 提供多种尺寸是很实用的
+      //icon 是随意提供多少个,
+      //chrome 选取最接近的尺寸, 为了适配不同屏幕,
+      //提供多种尺寸是很实用的
       "default_icon": {                    // optional
         "16": "images/icon16.png",           // optional
         "24": "images/icon24.png",           // optional
         "32": "images/icon32.png"            // optional
       },
-      # tooltip, 光标停留在 icon 上时显示
+      //tooltip, 光标停留在 icon 上时显示
       "default_title": "Google Mail",      // optional; shown in tooltip
-      # 如果有 popup 的页面, 则用户点击图标就会渲染此 HTML 页面
+      //如果有 popup 的页面, 则用户点击图标就会渲染此 HTML 页面
       "default_popup": "popup.html"        // optional        
   },
 
-  # 如果并不是对每个网站页面都需要使用插件, 可以使用 page_action 而不是 browser_action
-  # browser_action 应用更加广泛
-  # 如果 page_action 并不应用在当前页面, 会显示灰色
+  //如果并不是对每个网站页面都需要使用插件, 可以使用 page_action 而不是 browser_action
+  //browser_action 应用更加广泛
+  //如果 page_action 并不应用在当前页面, 会显示灰色
   "page_action": {...},
 
-  // Optional
+  //Optional
+
   "author": ...,
   "automation": ...,
-  # 参考: https://developer.chrome.com/extensions/background_pages
-  # 如字面意思, background 即插件后台 process,
-  # 一般不需要 html, 只需要一个 js 文件, 类似一个监听器
-  # 如果在 browser_action 或者其他情况下 state 变化,
-  # 就会告诉 background 来更新 view
+
+  //参考: https://developer.chrome.com/extensions/background_pages
+  //如字面意思, background 即插件后台 process,
+  //一般不需要 html, 只需要一个 js 文件, 类似一个监听器
+  //如果在 browser_action 或者其他情况下 state 变化,
+  //就会告诉 background 来更新 view
   "background": {
     "scripts": ["background.js"],
-    # 如果有必要, 也可以指定 background HTML
+
+    //如果有必要, 也可以指定 background HTML
     "page": "background.html",
-    # 此处设定为 false 为如果这个 process 并没有在运行,
-    # 即释放内存和系统资源
-    "persistent": false # Recommended    
+
+    //此处设定为 false 为如果这个 process 并没有在运行,
+    //即释放内存和系统资源
+    "persistent": false //Recommended    
   },
 
   "background_page": ...,
+
   "chrome_settings_overrides": {
     "homepage": "http://www.homepage.com",
     "search_provider": {
@@ -142,34 +150,44 @@
         "encoding": "UTF-8",
         "is_default": true
     },
-    # 覆盖 chrome 设定, Homepage, Search Provider, and Startup Pages
+
+    //覆盖 chrome 设定, Homepage, Search Provider, and Startup Pages
     "startup_pages": ["http://www.startup.com"]
   },
+
   "chrome_ui_overrides": {
+    //覆盖 bookmark ui 设置, 需要 Chrome Dev Release, 较新的 api 吧
     "bookmarks_ui": {
-      "remove_bookmark_shortcut": true, // 去掉添加书签的快捷键,
-      "remove_button": true // 去掉了地址栏右边的 star button, 可以将 browser_action 的 icon 放在此处
+      //去掉添加书签的快捷键,
+      "remove_bookmark_shortcut": true,
+
+      //去掉了地址栏右边的 star button, 可以将 browser_action 的 icon 放在此处
+      "remove_button": true
     }
-  }, // 覆盖 bookmark ui 设置, 需要 Chrome Dev Release, 较新的 api 吧
-  "chrome_url_overrides": {
-    "pageToOverride": "myPage.html"
-      // 替换页面 HTML/CSS/JS, 可以替换的页面:
-      // - 书签管理页面 chrome://bookmarks
-      // - 浏览历史页: chrome://history
-      // - 新标签页: chrome://newtab
   },
+
+  "chrome_url_overrides": {
+    // 替换页面 HTML/CSS/JS, 可以替换的页面:
+    // - 书签管理页面 chrome://bookmarks
+    // - 浏览历史页: chrome://history
+    // - 新标签页: chrome://newtab
+    "pageToOverride": "myPage.html"
+
+  },
+
+  // commands API 用来添加快捷键
+  // 需要在 background page 上添加监听器绑定 handler
   "commands": {
-      // commands API 用来添加快捷键
-      // 需要在 background page 上添加监听器绑定 handler
     "toggle-feature-foo": {
       "suggested_key": {
         "default": "Ctrl+Shift+Y",
         "mac": "Command+Shift+Y"
       },
       "description": "Toggle feature foo",
+      // 当 chrome 没有 focus 时也可以生效的快捷键
+      // 仅限 Ctrl+Shift+[0..9]
       "global": true
-        // 当 chrome 没有 focus 时也可以生效的快捷键
-        // 仅限 Ctrl+Shift+[0..9]
+
     },
     "_execute_browser_action": {
       "suggested_key": {
@@ -189,30 +207,34 @@
     ...
   },
   "content_capabilities": ...,
-    // content_scripts 是在当前网页中插入并执行的脚本, 可以对网页进行各种操作
-    // content_scripts 中可以监听插件发来的 message, 并进行某些操作
-    // 可以选择是否永远插入, 或者只在一部分网页中 inject
-    // content_scripts 执行环境称为 isolated world, 和正常页面中的 JS 不在相同环境中
-    //  保证不同 script 不会冲突, 也不会和网页本身冲突
-    //  也说明互相无法访问或使用其中的变量或函数
+
+  // content_scripts 是在当前网页中插入并执行的脚本, 可以对网页进行各种操作
+  // content_scripts 中可以监听插件发来的 message, 并进行某些操作
+  // 可以选择是否永远插入, 或者只在一部分网页中 inject
+  // content_scripts 执行环境称为 isolated world, 和正常页面中的 JS 不在相同环境中
+  //  保证不同 script 不会冲突, 也不会和网页本身冲突
+  //  也说明互相无法访问或使用其中的变量或函数
   "content_scripts": [
     {
-      "matches": ["http://www.google.com/*"],
-        // 指定那些页面需要 inject
+      "matches": ["http://www.google.com/*"],// 指定那些页面需要 inject
       "css": ["mystyles.css"], // 按照顺序 inject
       "js": ["jquery.js", "myscript.js"], // 按照顺序 inject
       "run_at": "document_idle", // 什么时候 inject js,  "document_start", "document_end", or "document_idle".
     }
   ],
+
+  // https://developer.chrome.com/extensions/contentSecurityPolicy
   "content_security_policy": "policyString",
-    // https://developer.chrome.com/extensions/contentSecurityPolicy
   "converted_from_user_script": ...,
   "current_locale": ...,
+
+  // 对 DevTools 的扩展, 例如 React, Redux develop tools
   "devtools_page": "devtools.html",
-    // 对 DevTools 的扩展, 例如 React, Redux develop tools
+
+  // 添加规则将某些 JS 事件转为 manifest (?)
   "event_rules": [{...}],
-    // 添加规则将某些 JS 事件转为 manifest (?)
   "externally_connectable": {
+
     // 指定哪些插件/ app/ 网站可以连接到你的插件上
     // 此处 ids 指允许连接的其他插件 id
     // 注意: 如果不写, 则认为所有其他插件都不能连接
@@ -220,11 +242,13 @@
       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
       ...
-      // 使用 wildcard "*" 允许所有其他插件连接
+
+      //使用 wildcard "*" 允许所有其他插件连接
       "*"
     ],
     "matches": ["*://*.example.com/*"]
   },
+
   "file_browser_handlers": [...], // 仅能在 Chrome OS 上使用, 对文件的操作
   "file_system_provider_capabilities": {
     // 仅能在 Chrome OS 上使用, 对文件的操作
@@ -233,60 +257,74 @@
     "source": "network"
   },
   "homepage_url": "http://path/to/homepage",
+
+  // 如果有 shared module, 在提供 shared module 的 extension 中则会有 "export" 项
   "import": [{"id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}],
-    // 如果有 shared module, 在提供 shared module 的 extension 中则会有 "export" 项
+
+  // 隐身模式下, "spanning" -> chrome app, "split" -> ext
   "incognito": "spanning, split, or not_allowed",
-    // 隐身模式下, "spanning" -> chrome app, "split" -> ext
   "input_components": ...,
   "key": "publicKey", // 不怎么需要用到了
   "minimum_chrome_version": "versionString", // 与 version 相同
+
+  // 使用 Native Client Module 对网络上某种 MIME 类似资源进行操作,
+  // 但貌似 deprecated 了, 往 WebAssembly发展了
   "nacl_modules": [{
     "path": "OpenOfficeViewer.nmf",
     "mime_type": "application/vnd.oasis.opendocument.spreadsheet"
-  }], // 使用 Native Client Module 对网络上某种 MIME 类似资源进行操作, 但貌似 deprecated 了, 往 WebAssembly发展了
+  }],
+
   "oauth2": ...,
   "offline_enabled": true,
+
   "omnibox": {
-    "keyword": "aString"
     // 注册一个 keyword显示在 address bar 的前面
     // 当用户在 address bar 中输入 keyword 后, 用户就是和插件在交互了
+    "keyword": "aString"
   },
-  "optional_permissions": ["tabs"], // 其他需要的 permission, 在使用 chrome.permissions API 时用到, 并非安装插件时需要
-  "options_page": "options.html",
-    // 允许用户进行某些配置来定制插件功能, 并使用 chrome.storage.sync api 来保存设置
+  // 其他需要的 permission,
+  // 在使用 chrome.permissions API 时用到, 并非安装插件时需要
+  "optional_permissions": ["tabs"],
 
-  # 新版配置功能 api, 支持 chrome40 以上,
-  # 打开 dialogue, 使用 chrome.runtime.openOptionsPage api 打开 option 页面
+  // 允许用户进行某些配置来定制插件功能, 并使用 chrome.storage.sync api 来保存设置
+  // 新版配置功能 api, 支持 chrome40 以上,
+  // 打开 dialogue, 使用 chrome.runtime.openOptionsPage api 打开 option 页面
+  "options_page": "options.html",
   "options_ui": {
     "chrome_style": true, //默认使用 Chrome user agent stylesheet
     "page": "options.html",
     "open_in_tab": false // 不建议打开新 tab, 以后会删除此项
   },
-  # https://developer.chrome.com/extensions/declare_permissions
-  # 有很多选择, 书签/右键菜单/剪贴板/cookie/下载/.... 等
+
+  //https://developer.chrome.com/extensions/declare_permissions
+  //有很多选择, 书签/右键菜单/剪贴板/cookie/下载/.... 等
   "permissions": ["tabs"],
   "platforms": ...,
   "plugins": [...],
-  # 要求某些可能需要用户安装某些额外的 tech, 例如 webGL
+
+  //要求某些可能需要用户安装某些额外的 tech, 例如 webGL
   "requirements": {
     "3D": {
       "features": ["webgl"]
     }
   },
-  # chrome 57 以上不再允许外部 web 内容
+
+  //chrome 57 以上不再允许外部 web 内容
   "sandbox": [...],
-  # 插件名字简写
+
+  //插件名字简写
   "short_name": "Short Name",
   "signature": ...,
   "spellcheck": ...,
 
-  # 使用 storage.managed api 的话, 需要一个 schema 文件指定存储字段类型等, 类似定义数据库表的 column
+  //使用 storage.managed api 的话, 需要一个 schema 文件指定存储字段类型等,
+  //类似定义数据库表的 column
   "storage": {
     "managed_schema": "schema.json"
   },
   "system_indicator": ...,
 
-  # text-to-speech(TTS) engine, permission 需要加上 ttsEngine
+  //text-to-speech(TTS) engine, permission 需要加上 ttsEngine
   "tts_engine": {
     "voices": [
       {
@@ -302,13 +340,16 @@
       }
     ]
   },
-  # 如果不是通过 chrome web store 自动更新插件
+
+  //如果不是通过 chrome web store 自动更新插件
   "update_url": "http://path/to/updateInfo.xml",
-  # 版本号名称, 如 "1.0 beta", 只是为了展示, 更加描述性
+
+  //版本号名称, 如 "1.0 beta", 只是为了展示, 更加描述性
   "version_name": "aString",
-  # 提供插件pkg中某些资源是当前 web page 可以使用的
-  # 默认插件中的资源对于网页是 blocked,
-  # 需要说明哪些是要使用的 图片/图标/css/js 等
+
+  //提供插件pkg中某些资源是当前 web page 可以使用的
+  //默认插件中的资源对于网页是 blocked,
+  //需要说明哪些是要使用的 图片/图标/css/js 等
   "web_accessible_resources": [...]
 }
 
@@ -386,7 +427,8 @@
     ...
 
     #属性可以自定义的页面替换 Chrome 相应默认的页面，
-    #比如新标签页（newtab）,
+
+	#比如新标签(newtab),
     #书签页面（bookmarks）,
     #和历史记录（history）
     "chrome_url_overrides": {
@@ -518,5 +560,22 @@ chrome.exe --pack-extension=C:\myext --pack-extension-key=C:\myext.pem
 
 #### demo
 
+##### 工作目录
+
+```js
+
+```
+
+##### 代码实例
+
+##### 运行
 
 #### 推荐
+
+给大家推荐一下我经常用的插件
+
+- Vimium 像vim一样操作chrome
+- Google翻译
+- Postman
+- React Developer Tools 调试react
+- Giliffy 绘制uml图，流程图
