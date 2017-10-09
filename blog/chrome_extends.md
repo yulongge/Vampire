@@ -1,24 +1,26 @@
-## Chrome插件开发
+## Chrome Extension
+
+严格来讲，我们正在说的东西应该叫Chrome扩展(Chrome Extension)
+
+Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包
 
 > 扩展程序由一些文件（包括 HTML、CSS、JavaScript、图片以及其他任何您需要的文件）经过 zip 打包得到，为 Google Chrome 浏览器增加功能。扩展程序本质上是网页，它们可以利用浏览器为网页提供的所有 API，例如 XMLHttpRequest、JSON、HTML5 等等
 
- 扩展程序可以通过内容脚本或跨站 XMLHttpRequest 与网页或者服务器交互，扩展程序也可以以编程方式与浏览器功能（例如书签和标签页交互）。
+ 扩展程序可以通过内容脚本或跨站 XMLHttpRequest 与网页或者服务器交互，扩展程序也可以以编程方式与浏览器功能（例如书签和标签页交互）
+。
 
 #### 扩展程序的界面
 
-> 很多应用会以browser	action或page	action的形式在浏览器界面上展现出 来。每个应用（扩展）最多可以有一个browser action或page action。当应用（扩展）的图标 是否显示出来是取决于单个的页面时，应当选择page action；当其它情况时可以选择browser action。
+Chrome插件都长啥样?
 
 应用也可以通过其它方式提供界面，比如加入到上下文菜单，提供一个选项页面或者用一个 content	script改变页面的显示等。可以在"开发指南"中找到应用（扩展）特性的完整列表以及 实现的细节
 
 [界面列表](https://crxdoc-zh.appspot.com/extensions/devguide)
 
-![chromelist](images/chromelist.png)
+![chromelist](images/chromelist.png)\
 
-- Browser Actions将扩展图标置于Chrome浏览器工具栏中，地址栏的右侧。如果声明了popup页面，当用户点击图标时，在图标的下侧会打开这个页面。同时图标上面还可以附带badge——一个带有显示有限字符空间的区域——用以显示一些有用的信息，如未读邮件数、当前音乐播放时间等。
-如果没有足够的空间，会在图标的上侧打开。
-- 右键菜单：要在Manifest的permissions域中声明contextMenus权限。
-- 桌面提醒：需要在Manifest中声明notifications权限。
-创建桌面提醒非常容易，只需指定标题、内容和图片即可。下面的代码生成了标题为“Notification Demo”，内容为“Merry Christmas”，图片为“icon48.png”的桌面提醒窗口。
+- 右键菜
+- 开发者工具
 
 #### 目录结构
 
@@ -563,12 +565,117 @@ chrome.exe --pack-extension=C:\myext --pack-extension-key=C:\myext.pem
 ##### 工作目录
 
 ```js
-
+├ eat
+	├ manifest.json
+	├ popup.html
+	├ popup.css
+	├ popup.js
+	├ eat.png
+	├ js
+		├ background.js
 ```
 
 ##### 代码实例
 
+```js
+//manifest.json
+	{
+	    "name": "eat",
+	    "description": "eat",
+	    "manifest_version": 2,
+	    "minimum_chrome_version": "23",
+	    "version": "1.2",
+	    "offline_enabled": true,
+	    "background": {
+	        "scripts": ["js/background.js"]
+	    },
+	    "browser_action": {
+	        "default_icon": "eat.png",
+	        "default_popup": "popup.html",
+	        "default_title": "我们吃啥啊?"
+	    },
+	    /*"page_action": {
+	        "default_icon": "eat.png"
+	    },*/
+	    "permissions" : [
+	        "clipboardWrite",
+	        "contextMenus",
+	        "notifications",
+	        "declarativeContent"
+	    ],
+	    "chrome_url_overrides": {
+	        "newtab": "popup.html"
+	    },
+	    "icons": {
+	        "16": "eat.png"
+	    },
+	    //"options_page": "popup.html",
+	    "homepage_url": "http://manage.dev.acewill.net/"
+	}
+
+```
+
+```js
+//background.js
+chrome.browserAction.setBadgeText({text: 'new'});
+chrome.browserAction.setBadgeBackgroundColor({color: [255, 0, 0, 255]});
+
+chrome.contextMenus.create({
+	title: "吃啥",
+	onclick: function(){alert('吃啥');}
+});
+chrome.notifications.create(null, {
+	type: 'basic',
+	iconUrl: 'eat.png',
+	title: '这是标题',
+	message: '您刚才点击了自定义右键菜单！'
+});
+
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { urlContains: 'g' },
+          })
+        ],
+        actions: [ new chrome.declarativeContent.ShowPageAction() ]
+      }
+    ]);
+  });
+});
+
+```
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="UTF-8">
+  	<title>吃饭</title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
+  </head>
+  <body>
+  	<ul id="content">
+  		<li style="left:0;top:0;">我怎么知道</li>
+  		<li style="left:100px;top:0;">公司食堂</li>
+  		<li style="left:200px;top:0;">九号食堂</li>
+  		<li style="left:200px;top:100px;">美食城</li>
+  		<li style="left:200px;top:200px;">地铁</li>
+  		<li style="left:100px;top:200px;">外卖</li>
+  		<li style="left:0;top:200px;">别吃了，减肥</li>
+  		<li style="left:0;top:100px;">超市</li>
+  	</ul>
+  	<a href="javascript:void(0);" id="begin">开始</a>
+    <script src="popup.js"></script>
+  </body>
+</html>
+```
+
 ##### 运行
+
+![eat](images/chrome/eat_extension.png)
 
 #### 推荐
 
