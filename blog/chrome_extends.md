@@ -2,12 +2,15 @@
 
 严格来讲，我们正在说的东西应该叫Chrome扩展(Chrome Extension)
 
+### 什么叫Chroem插件
+
 Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包
 
 > 扩展程序由一些文件（包括 HTML、CSS、JavaScript、图片以及其他任何您需要的文件）经过 zip 打包得到，为 Google Chrome 浏览器增加功能。扩展程序本质上是网页，它们可以利用浏览器为网页提供的所有 API，例如 XMLHttpRequest、JSON、HTML5 等等
 
- 扩展程序可以通过内容脚本或跨站 XMLHttpRequest 与网页或者服务器交互，扩展程序也可以以编程方式与浏览器功能（例如书签和标签页交互）
-。
+至于为什么是.crx文件，我也不清楚...
+
+> 可能是 **C** h **r** ome E **x** tension 的这三个字母
 
 #### 扩展程序的界面
 
@@ -17,24 +20,41 @@ Chrome插件都长啥样?
 
 [界面列表](https://crxdoc-zh.appspot.com/extensions/devguide)
 
-![chromelist](images/chromelist.png)\
+![chromelist](https://yulongge.github.io/images/chrome/chromelist.png)
+
+除了这个之外，还发现两只：
 
 - 右键菜
 - 开发者工具
 
+至于长什么样儿，看看自己的浏览器，动手找找，比如：
+
+- 浏览器按钮
+  ![btn](https://yulongge.github.io/images/chrome/chrome_btn.png)
+- 桌面通知
+  ![btn](https://yulongge.github.io/images/chrome/chrome_desktop.png)
+- 多功能框
+  ![btn](https://yulongge.github.io/images/chrome/chrome_search.png)
+- 页面按钮
+  ![btn](https://yulongge.github.io/images/chrome/chrome_page.png)
+- 主题背景
+  ![btn](https://yulongge.github.io/images/chrome/chrome_theme.png)
+
+
 #### 目录结构
 
-```js
+```jS
+
 ├ demo
     ├ manifest.json //一个清单文件,这是一个配置文件，里面记录了扩展的使用范围、作者、版本、其余需要加载的文件等内容;
     ├ popup.html //一个或多个HTML文件,点击扩展图标，弹出的面板页面（如果在manifest.json中配置了default_popup为该文件的话）
     ├ demo.js //一个或多个js文件,popup面板加载的js脚本文件
     ├ popup.css //popup面板加载的js脚本文件
     ├ ... //需要的任何其他文件,比如图片icon.png
+
 ```
 
- 当您编写您的扩展程序时，您将所有这些文件放在一个文件夹中。当您发布您的扩展程序时，该文件夹的内容将被压缩成一个特殊的 ZIP 文件，以 .crx 为后缀。如果您通过 Chrome 开发者信息中心上传您的扩展程序，该 .crx 文件会自动为您创建
-
+> manifest.json必不可少的
 > 至于HTML、CSS、JS 及文件组织，跟普通的 Web 开发一样
 > 出于安全考虑，入口html文件中的JS代码只能通过script标签引用外部脚本文件，内嵌的JS代码会失效的。
 
@@ -361,85 +381,196 @@ Chrome插件都长啥样?
 
 ##### 基本属性
 
-```shell
-# 扩展程序的名称
+```js
+//扩展程序的名称
 "name": "我的扩展程序",
 
-# 扩展程序的版本
+//扩展程序的版本
 "version": "版本字符串",
 
-# 第一行声明我们使用清单文件格式的版本 2，必须包含
-#（版本 1 是旧的，已弃用，不建议使用）
+//第一行声明我们使用清单文件格式的版本 2，必须包含
+//(版本 1 是旧的，已弃用，不建议使用）
 "manifest_version": 2,
 ```
 
 > 以上属性为必填
 
+##### 推荐属性
+
+```js
+//如果需要指定不同 locale 使用不同的资源文件,
+//例如在中国显示中文, 在日本显示为日语等
+//则会在根目录中添加 `_locale` 文件夹;
+//若没有 `_locale` 文件夹, 则不能出现该项配置
+"default_locale": "en",
+
+//描述插件是干啥的,
+//描述需要适合在 chrome web store 上显示
+"description": "A plain text description",
+
+//图标可以是1个, 或者多个
+//一般来说最好的方案是提供3个:
+//- 128x128: 在从 chrome web store 安装的过程中需要使用,
+//- 48x48: chrome://extensions 插件管理页面中使用
+//- 16x16: 插件页面当做 favicon 使用
+"icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+},
+
+```
+
 ##### 常用属性
 
-```shell
+```js
 {   
-    ...
-
-    #指定扩展的图标放在 Chrome 工具栏中，
-    #它定义了扩展图标文件位置（default_icon）、
-    #悬浮提示（default_title）
-    #点击扩展图标所显示的页面位置（default_popup）
-    "browser_action": {
-        "default_icon": {
-            "19": "images/icon19.png",
-            "38": "images/icon38.png"
-        },
-        "default_title": "stock helper",
-        "default_popup": "popup.html"
-    }
-    ...
-
-    #属性定义了扩展的设置页面，
-    #配置后在扩展图标点击右键可以看到 选项 ，点击即打开指定页面。
-    #对于没有图标（没有设置 browser_action）的扩展，
-    #可以在 chrome://extensions/ 页面找到选项按钮
-    "options_page": "options.html"
-
-    ...
-
-    #属性是一个数组，它定义了扩展需要向 Chrome 申请的权限，
-    #比如通过 XMLHttpRequest 跨域请求数据、
-    #访问浏览器选项卡（tabs）、
-    #获取当前活动选项卡（activeTab）、
-    #浏览器通知（notifications）、存储（storage）等，
-    #可以根据需要添加
-    "permissions": [
-        "http://hq.sinajs.cn/list=*"
-        "tabs",
-        "activeTab",
-        "notifications",
-        "storage"
-    ]
-
-    ...
-
-    #可以使扩展常驻后台，
-    #比较常用的是指定子属性 scripts，
-    #表示在扩展启动时自动创建一个包含所有指定脚本的页面
-    "background": {
-        "scripts": ["js/background.js"]
-    }
-
-    ...
-
-    #属性可以自定义的页面替换 Chrome 相应默认的页面，
-
-	#比如新标签(newtab),
-    #书签页面（bookmarks）,
-    #和历史记录（history）
-    "chrome_url_overrides": {
-        "newtab": "tab.html"
+    // 会一直常驻的后台JS或后台页面
+    "background":
+    {
+      // 2种指定方式，如果指定JS，那么会自动生成一个背景页
+      "page": "background.html"
+      //"scripts": ["js/background.js"]
     },
-
-    ...
+    // 浏览器右上角图标设置，browser_action、page_action、app必须三选一
+    "browser_action":
+    {
+      "default_icon": "img/icon.png",
+      // 图标悬停时的标题，可选
+      "default_title": "这是一个示例Chrome插件",
+      "default_popup": "popup.html"
+    },
+    // 当某些特定页面打开才显示的图标
+    /*"page_action":
+    {
+      "default_icon": "img/icon.png",
+      "default_title": "我是pageAction",
+      "default_popup": "popup.html"
+    },*/
+    // 需要直接注入页面的JS
+    "content_scripts":
+    [
+      {
+        //"matches": ["http://*/*", "https://*/*"],
+        // "<all_urls>" 表示匹配所有地址
+        "matches": ["<all_urls>"],
+        // 多个JS按顺序注入
+        "js": ["js/jquery-1.8.3.js", "js/content-script.js"],
+        // JS的注入可以随便一点，但是CSS的注意就要千万小心了，因为一不小心就可能影响全局样式
+        "css": ["css/custom.css"],
+        // 代码注入的时间，可选值： "document_start", "document_end", or "document_idle"，最后一个表示页面空闲时，默认document_idle
+        "run_at": "document_start"
+      },
+      // 这里仅仅是为了演示content-script可以配置多个规则
+      {
+        "matches": ["*://*/*.png", "*://*/*.jpg", "*://*/*.gif", "*://*/*.bmp"],
+        "js": ["js/show-image-content-size.js"]
+      }
+    ],
+    // 权限申请
+    "permissions":
+    [
+      "contextMenus", // 右键菜单
+      "tabs", // 标签
+      "notifications", // 通知
+      "webRequest", // web请求
+      "webRequestBlocking",
+      "storage", // 插件本地存储
+      "http://*/*", // 可以通过executeScript或者insertCSS访问的网站
+      "https://*/*" // 可以通过executeScript或者insertCSS访问的网站
+    ],
+    // 普通页面能够直接访问的插件资源列表，如果不设置是无法直接访问的
+    "web_accessible_resources": ["js/inject.js"],
+    // 插件主页，这个很重要，不要浪费了这个免费广告位
+    "homepage_url": "https://yulongge.io",
+    // 覆盖浏览器默认页面
+    "chrome_url_overrides":
+    {
+      // 覆盖浏览器默认的新标签页
+      "newtab": "newtab.html"
+    },
+    // Chrome40以前的插件配置页写法
+    "options_page": "options.html",
+    // Chrome40以后的插件配置页写法，如果2个都写，新版Chrome只认后面这一个
+    "options_ui":
+    {
+      "page": "options.html",
+      // 添加一些默认的样式，推荐使用
+      "chrome_style": true
+    },
+    // 向地址栏注册一个关键字以提供搜索建议，只能设置一个关键字
+    "omnibox": { "keyword" : "go" },
+    // devtools页面入口，注意只能指向一个HTML文件，不能是JS文件
+    "devtools_page": "devtools.html"
 }
 ```
+
+##### 概要说明
+
+- content-script
+
+  > 所谓content-scripts，
+		其实就是Chrome插件中向页面注入脚本的一种形式（虽然名为script，其实还可以包括css的），
+		借助content-scripts我们可以实现通过配置的方式轻松向指定页面注入JS和CSS
+		最常见的比如：广告屏蔽、页面CSS定制，等等。
+
+- background
+
+  > 后台（姑且这么翻译吧），
+		是一个常驻的页面，它的生命周期是插件中所有类型页面中最长的，
+		它随着浏览器的打开而打开，随着浏览器的关闭而关闭，
+		所以通常把需要一直运行的、启动就运行的、全局的代码放在background里面。
+		background的权限非常高，
+		几乎可以调用所有的Chrome扩展API（除了devtools），
+		而且它可以无限制跨域，也就是可以跨域访问任何网站而无需要求对方设置CORS
+
+- event-pages
+
+> 鉴于background生命周期太长，
+长时间挂载后台可能会影响性能，
+所以Google又弄一个event-pages，
+在配置文件上，它与background的唯一区别就是多了一个persistent参数
+
+```js
+  {
+    "event-pages":{
+      "scripts": ["event-page.js"],
+      "persistent": false
+    }
+  }
+```
+
+它的生命周期是：
+在被需要时加载，在空闲时被关闭，
+什么叫被需要时呢？
+比如第一次安装、插件更新、有content-script向它发送消息，等等
+
+- popup
+
+  > opup是点击browser_action或者page_action图标时打开的一个小窗口网页，焦点离开网页就立即关闭，一般用来做一些临时性的交互。
+
+  popup可以包含任意你想要的HTML内容，
+	并且会自适应大小。
+	可以通过default_popup字段来指定popup页面，
+	也可以调用setPopup()方法
+
+```js
+	{
+		"browser_action":
+		{
+			"default_icon": "img/icon.png",
+			// 图标悬停时的标题，可选
+			"default_title": "这是一个示例Chrome插件",
+			"default_popup": "popup.html"
+		}
+	}
+```
+
+- homepage_url
+
+  > 开发者或者插件主页设置
+
+
 
 #### Chrome API
 
@@ -474,11 +605,45 @@ Chrome插件都长啥样?
 - webRequest 拦截、修改、阻塞请求
 - windows 创建、修改、重排窗口
 
+举例说明：
+
+```js
+...
+chrome.contextMenus.create({
+	title: "测试右键菜单",
+	onclick: function(){alert('您点击了右键菜单！');}
+});
+...
+
+chrome.browserAction.setBadgeText({text: 'new'}); //badge
+chrome.browserAction.setBadgeBackgroundColor({color: [255, 0, 0, 255]});
+
+...
+
+// 创建自定义面板，同一个插件可以创建多个自定义面板
+// 几个参数依次为：panel标题、图标（其实设置了也没地方显示）、要加载的页面、加载成功后的回调
+chrome.devtools.panels.create('MyPanel', 'img/icon.png', 'mypanel.html', function(panel)
+{
+	console.log('自定义面板创建成功！'); // 注意这个log一般看不到
+});
+
+...
+
+chrome.notifications.create(null, {
+	type: 'basic',
+	iconUrl: 'img/icon.png',
+	title: '这是标题',
+	message: '您刚才点击了自定义右键菜单！'
+});
+
+```
+
+
 #### 扩展调试
 
 > chrome的菜单里打开扩展程序(打开开发者模式)
 
-![chrome_debug](images/debug_chrome.png)
+![chrome_debug](https://yulongge.github.io/images/chrome/debug_chrome.png)
 
 调试通普通页面一样
 
@@ -489,7 +654,7 @@ Chrome插件都长啥样?
 
 直接chrome://extensions/找到你插件的ID
 
-![youya](images/youya.png)
+![youya](https://yulongge.github.io/images/chrome/youya.png)
 
 然后:
 
@@ -507,7 +672,7 @@ chrome-extension://abpkdgpklogmegpnglebckniebimhfll/popup.html
 
 访问chrome://version 找到Chrome插件安装的本机目录
 
-![version](images/chrome_version.png)
+![version](https://yulongge.github.io/images/chrome/chrome_version.png)
 
 然后找到extension目录
 
@@ -517,16 +682,15 @@ chrome-extension://abpkdgpklogmegpnglebckniebimhfll/popup.html
 
 ##### 创建包
 
-- 进入以下URL，打开扩展程序管理页面:
-chrome://extensions
+- 进入以下URL，打开扩展程序管理页面:chrome://extensions
 - 确保右上角的开发者模式复选框已选中.
 - 单击打包扩展程序按钮，出现一个对话框。
 - 在扩展程序根目录字段中，指定扩展程序所在文件夹的路径，例如，C:\myext。（忽略其他字段，您第一次为一个扩展程序打包时不需要指定私有密钥文件。）
 - 单击打包扩展程序。打包程序将创建两个文件：一个 .crx 文件，是实际的可安装的扩展程序；另一个是 .pem 文件，包含私有密钥。
 
-    > 不要丢失私有密钥！确保 .pem 文件保密，并存放在安全的地方。如果您今后需要做如下事情，您需要这一文件：
-    > - 更新扩展程序
-    > - 将扩展程序上传至 Chrome 网上应用店
+> 不要丢失私有密钥！确保 .pem 文件保密，并存放在安全的地方。如果您今后需要做如下事情，您需要这一文件：
+> - 更新扩展程序
+> - 将扩展程序上传至 Chrome 网上应用店
 
 ##### 更新包
 
@@ -675,7 +839,7 @@ chrome.runtime.onInstalled.addListener(function() {
 
 ##### 运行
 
-![eat](images/chrome/eat_extension.png)
+![eat](https://yulongge.github.io/images/chrome/eat_extension.png)
 
 #### 推荐
 
