@@ -64,5 +64,5 @@ GPL是一种版本自由的协议，此协议要求代码分发者或者以此�
 > - 附加协议(Sublicensing)：允许在软件分发传播过程中附加上原来没有的协议条款等
 
 ## 参考
-http://www.cnblogs.com/Wayou/p/how_to_choose_a_license.html
-https://choosealicense.com/
+- http://www.cnblogs.com/Wayou/p/how_to_choose_a_license.html
+- https://choosealicense.com/
