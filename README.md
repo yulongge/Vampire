@@ -6,7 +6,7 @@
 
 #### JavaScript
 
----
+<br />
 
 1. Array
 	---
@@ -21,7 +21,7 @@
 
 #### NPM
 
----
+<br />
 
 - [NPM常用命令](https://github.com/yulongge/Vampire/blob/master/blog/npm_command.md)
 - [NPM UNMET DEPENDENCY 的解决方案](https://github.com/yulongge/Vampire/blob/master/blog/npm_catch.md)
@@ -29,7 +29,7 @@
 
 #### Git
 
----
+<br />
 
 - [Git常用命令](https://github.com/yulongge/Vampire/blob/master/blog/git_doc.md)
 - [Git回滚](https://github.com/yulongge/Vampire/blob/master/blog/git_return.md)
@@ -37,48 +37,43 @@
 
 #### Chrome
 
----
+<br />
 
 - [Chrome插件开发](https://github.com/yulongge/Vampire/blob/master/blog/chrome_extends.md)
 
-
 #### React
 
----
+<br />
 
 - [React性能优化](https://github.com/yulongge/Vampire/blob/master/blog/react_optimize.md)
 
 #### Vue
 
----
+<br />
 
 - [基础指南](https://github.com/yulongge/Vampire/blob/master/blog/vue.md)
 
 #### Ruby
 
----
+<br />
 
 - [基础指南](https://github.com/yulongge/Vampire/blob/master/blog/ruby.md)
 
-#### Web Frame
+#### WebFrame
 
----
+<br />
 
 - [MV*](https://github.com/yulongge/Vampire/blob/master/blog/mv_x.md)
 
-
 #### Mini Program
 
----
+<br />
 
 - [基础指南](https://github.com/yulongge/Vampire/blob/master/blog/min_programe.md)
 
-
-
-
 #### Markdown
 
----
+<br />
 
 - [Markdown 排版 微信公众号文章](https://github.com/yulongge/Vampire/blob/master/blog/markdown_to_wechatArticle.md)
 
