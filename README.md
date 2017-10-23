@@ -1,10 +1,6 @@
-# Vampire
-
-> jser的救赎
-
 ![saved](img/saved.png)
 
-### blog
+> jser的救赎
 
 #### JavaScript
 
