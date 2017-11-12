@@ -1,5 +1,7 @@
+<!-- slide -->
+
 # Vue
----
+<!-- slide data-text-align="left" -->
 
 ## 简介
 
@@ -7,27 +9,32 @@ Vue(/vju:/, 类似于View)，一套构建用户界面的渐进式框架。采用
 
 > 与单文件组件和Vue生态系统支持的库结合使用时，Vue也完全能够为复杂的单页应用程序提供有力驱动
 
----
+<!-- slide -->
 
 ## 安装
 
-Vue.js不支持IE8及其以下版本，因为Vue.js使用的ECMAScript5的特性在IE8下无法模拟。Vue支持所有兼容ECMAScript的浏览器。
+- Vue.js不支持IE8及其以下版本，因为Vue.js使用的ECMAScript5的特性在IE8下无法模拟。Vue支持所有兼容ECMAScript的浏览器。
 
-http://caniuse.com/#feat=es5
+> http://caniuse.com/#feat=es5
+
+<!-- slide -->
 
 - 直接引入`<script>`标签
-	
-> Vue会被注册一个全局变量。在开发环境中引入开发环境版本，包含完整的警告和调试模式，对开发更加友好!
-> CDN
-> - [unpkg](https://unpkg.com/vue) : npm 发布后立即同步
-> - [jsDelivr](https://cdn.jsdelivr.net/npm/vue/dist/vue.js) : npm发布后需要一段时间才能同步，所以可能无法获取最新版本 
-> - [cdnjs](https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.js) : 同jsDelivr
+Vue会被注册一个全局变量。在开发环境中引入开发环境版本，包含完整的警告和调试模式，对开发更加友好!
+  + CDN
+  + [unpkg](https://unpkg.com/vue) : npm 发布后立即同步
+  + [jsDelivr](https://cdn.jsdelivr.net/npm/vue/dist/vue.js) : npm发布后需要一段时间才能同步，所以可能无法获取最新版本
+  + [cdnjs](https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.js) : 同jsDelivr
+
+<!-- slide -->
 
 - Bower
-	
+
 ```shell
 bower install vue
 ```
+
+<!-- slide -->
 
 - NPM
 
@@ -38,6 +45,7 @@ npm install vue
 ```
 
 ---
+<!-- slide -->
 
 
 在NPM包的dist/目录下，你会找到许多不同的构建版本的Vue.js.
@@ -50,6 +58,7 @@ npm install vue
 |只含有运行时版本(生产环境)|vue.runtime.min.js|||
 
 ---
+<!-- slide -->
 
 > - 完整版本(Full)：包含编译器(compiler)和运行时(runtime)的构建版本。
 > - 编译器(Compiler)：负责将模板字符串编译成 JavaScript 渲染函数(render function)的代码。
@@ -59,6 +68,7 @@ npm install vue
 > - ES Module：ES 模块版本构建用于现代打包器（例如 webpack 2 或 rollup 等）中。用于这些打包器的默认文件(pkg.module)，是只含有运行时(Runtime only)的 ES Module 构建版本(vue.runtime.esm.js)。
 
 ---
+<!-- slide -->
 
 ### 命令行接口工具
 
@@ -78,6 +88,7 @@ npm run dev
 > 对于初学者来说，不建议使用cli工具，影响我们学习，对于老手来说，也许我们也不屑于使用这个，当然我们都是很有自信的。
 
 ---
+<!-- slide -->
 
 ## 语法
 
@@ -85,6 +96,7 @@ npm run dev
 > Vue实例的创建，语法，事件处理
 
 ---
+<!-- slide -->
 
 ### Vue实例
 
@@ -96,11 +108,36 @@ var vm = new Vue({
 })
 ```
 
+```js
+var vm = new Vue({
+  // 选项 options
+  // ==========
+  // 数据
+  data: '',
+  props: '',
+  computed: {}, //不应该使用箭头函数来定义计算属性函数
+  methods: {}, //不应该使用箭头函数来定义 method 函数
+  watch: { key: function(val, oldVal){} },
+  // ==========
+  // DOM
+  el: '',
+  template: '',
+  render: function(){}, // [Render 函数]
+  // ==========
+  // 生命周期
+  // ==========
+  // 资源
+  // ==========
+  // 杂项
+ })
+```
+
+demo:
+
 ```html
 <div id="app">
   {{ message }}
 </div>
-
 ```
 
 ```js
@@ -115,18 +152,32 @@ var app = new Vue({
 这样就创建了一个实例，创建时你可以传入一个选项对象。
 
 ---
+<!-- slide -->
 
 #### 实例的生命的周期
 
 ![vue-lifecycle](https://yulongge.github.io/images/vue/vue_lifecycle.png)
 
----
+它可以总共分为8个阶段：
 
-如果熟悉react的话可以对比一下:
+- beforeCreate（创建前）,
+- created（创建后）,
+- beforeMount(载入前),
+- mounted（载入后）,
+- beforeUpdate（更新前）,
+- updated（更新后）,
+- beforeDestroy（销毁前）,
+- destroyed（销毁后）
+
+---
+<!-- slide -->
+
+如果熟悉react的话可以来回想一下:
 
 ![react-lifecycle](https://yulongge.github.io/ppt/img/react.png)
 
 ---
+<!-- slide -->
 
 ### 模板语法
 
@@ -137,6 +188,7 @@ Vue使用基于HTML的模板语法，允许开发者声明式的将DOM绑定至�
 当然你也可以不用模板，直接写渲染(render)函数，使用可选的JSX语法。
 
 ---
+<!-- slide -->
 
 #### 文本
 
@@ -148,6 +200,7 @@ Vue使用基于HTML的模板语法，允许开发者声明式的将DOM绑定至�
 > Mastache 会将数据解释为不同的文本，而非HTML代码，有时候我们想输出正真的HTML,需要使用`v-html`指令
 
 ---
+<!-- slide -->
 
 #### 原始HTML
 
@@ -160,6 +213,7 @@ Vue使用基于HTML的模板语法，允许开发者声明式的将DOM绑定至�
 > 渲染任何html是很危险的，很容易导致xss攻击
 
 ---
+<!-- slide -->
 
 #### 特性
 
@@ -173,6 +227,7 @@ Mustache 语法不能作用在HTML特性上，这时候应该使用v-bind指令
 > 适用于布尔类型，如果求值结果是`falsy`(falsy不是false)的值，属性将会被删除
 
 ---
+<!-- slide -->
 
 #### 使用JavaScript表达式
 
@@ -197,6 +252,7 @@ Mustache 语法不能作用在HTML特性上，这时候应该使用v-bind指令
 ```
 
 ---
+<!-- slide -->
 
 ### 指令
 
@@ -290,7 +346,7 @@ new Vue({
 
 - vnode
 - oldVnode
-	
+
 > 除了el之外，其他的参数都应该是只读的，尽量不要修改他们。
 
 ---
@@ -307,14 +363,6 @@ Vue.derective('color-swatch', function(el, binding) {
 
 ---
 
-### Class && Style
-
-> 操作元素的class列表和内联样式是数据绑定的一个常见需求，因为他们都是属性，所以可用`v-bind`处理它们,Vue为了防止字符串拼接带来的麻烦和易错，将v-bind用于class 和 style 时，做了增强，表达式结果的类型除了字符串之外，还可以是对象或数组。
-
-- v-bind:class
-- v-bind:style
-
----
 
 ### 条件语句
 
@@ -489,7 +537,7 @@ Vue用`v-for`渲染列表是，默认用`就地复用`策略。这种模式是�
 
 - 变异方法
 	> Vue包含一组观察数组的变异方法，所以它们也将会触发视图更新。
-	
+
 	+ push()
 	+ pop()
 	+ shift()
@@ -497,7 +545,7 @@ Vue用`v-for`渲染列表是，默认用`就地复用`策略。这种模式是�
 	+ splice()
 	+ sort()
 	+ reverse()
-	
+
 	```js
 	//打开控制台
 	example1.items.push({ message: 'longgege coming...'});
@@ -509,7 +557,7 @@ Vue用`v-for`渲染列表是，默认用`就地复用`策略。这种模式是�
 
 - 替换数组
 	> 变异数组会改变原始数组，相比之下也有非变异方法。它们不会改变原始数组，总是返回一个新数组，可以用新数组替换旧数组。
-	
+
 	+ filter()
 	+ concat()
 	+ slice()
@@ -521,15 +569,15 @@ Vue用`v-for`渲染列表是，默认用`就地复用`策略。这种模式是�
 	```
 
 	> 幸运的是，Vue为了使得DOM元素得到最大范围的重用实现了一些机智得到，启发式的方法，所以这样替换也是非常高效的操作。
-	
+
 ---
 
 - 注意事项
 	> 由于JavaScript的限制，Vue不能检测一下变动的数组;
-	
+
 	+ 利用索引设置一个项时
 	+ 修改数组长度时
-	
+
 	```js
 	//利用索引
 	vm.items[indexOfItem] = newValue;
@@ -596,7 +644,7 @@ this.user = Object.assign({}, this.user, {
   	<button v-on:click="greet">Greet</button>
 
 	<!-- 内联处理器的方法 -->
-	<button v-on:click="say('hi')">Say hi</button> 
+	<button v-on:click="say('hi')">Say hi</button>
 	<!-- 有时也需要在内联语句处理器中访问原生 DOM 事件。可以用特殊变量 $event 把它传入方法 -->
 	<button v-on:click="warn('Form cannot be submitted yet.', $event)">
 	  Submit
@@ -612,7 +660,7 @@ var example1 = new Vue({
   },
   methods: {
  	greet: function(event) {
-		//....	
+		//....
 	},
 	say: function(message) {
 		console.log(message, 'msg');
@@ -703,7 +751,7 @@ Vue 为了解决这个问题，提供了`事件修饰符`,通过`(.)`表示的�
 
 ### 表单
 
-Vue用v-model指令在表单控件元素上创建双向数据绑定
+Vue用v-model指令在表单控件元素上创建双向数据绑定, `v-model`会根据控件类型自动选取正确的方法来更新元素。
 
 ```html
 <input v-model="message" placeholder="edit me">
@@ -718,20 +766,649 @@ Vue用v-model指令在表单控件元素上创建双向数据绑定
 - 单选按钮
 - 选择列表
 
+`文本与多行文本`
+
+```html
+<input v-model="message" placeholder="edit me">
+<p>Message is: {{ message }}</p>
+
+<textarea v-model="message" placeholder="add multiple lines"></textarea>
+
+```
+
+`复选框`
+
+```html
+<input type="checkbox" id="checkbox" v-model="checked">
+<label for="checkbox">{{ checked }}</label>
+
+<div id='example-3'>
+  <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+  <label for="jack">Jack</label>
+  <input type="checkbox" id="john" value="John" v-model="checkedNames">
+  <label for="john">John</label>
+  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+  <label for="mike">Mike</label>
+  <br>
+  <span>Checked names: {{ checkedNames }}</span>
+</div>
+
+```
+
+```js
+new Vue({
+  el: '#example-3',
+  data: {
+    checkedNames: []
+  }
+})
+```
+
+`单选按钮`
+
+```html
+<div id="example-4">
+  <input type="radio" id="one" value="One" v-model="picked">
+  <label for="one">One</label>
+  <br>
+  <input type="radio" id="two" value="Two" v-model="picked">
+  <label for="two">Two</label>
+  <br>
+  <span>Picked: {{ picked }}</span>
+</div>
+
+```
+
+```js
+new Vue({
+  el: '#example-4',
+  data: {
+    picked: ''
+  }
+})
+```
+
+`选择列表`
+
+```html
+<div id="example-5">
+  <select v-model="selected">
+    <option disabled value="">请选择</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <span>Selected: {{ selected }}</span>
+</div>
+```
+
+```js
+new Vue({
+  el: '...',
+  data: {
+    selected: ''
+  }
+})
+```
+
+`多选列表`
+
+```html
+<div id="example-6">
+  <select v-model="selected" multiple style="width: 50px;">
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <br>
+  <span>Selected: {{ selected }}</span>
+</div>
+```
+
+```js
+new Vue({
+  el: '#example-6',
+  data: {
+    selected: []
+  }
+})
+```
+
+动态选项用`v-for`渲染
+
+```html
+<select v-model="selected">
+  <option v-for="option in options" v-bind:value="option.value">
+    {{ option.text }}
+  </option>
+</select>
+<span>Selected: {{ selected }}</span>
+```
+
+```js
+new Vue({
+  el: '...',
+  data: {
+    selected: 'A',
+    options: [
+      { text: 'One', value: 'A' },
+      { text: 'Two', value: 'B' },
+      { text: 'Three', value: 'C' }
+    ]
+  }
+})
+```
+
 ---
 
 修饰符
 
 - .lazy
-- .number
-- .trim
 
->ii  
+在默认情况下，v-model 在 input 事件中同步输入框的值与数据 (除了 上述 IME 部分)，但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步：
+
+```html
+<!-- 在 "change" 而不是 "input" 事件中更新 -->
+<input v-model.lazy="msg" >
+```
+
+- .number
+如果想自动将用户的输入值转为 Number 类型 (如果原值的转换结果为 NaN 则返回原值)，可以添加一个修饰符 number 给 v-model 来处理输入值：
+
+```html
+<input v-model.number="age" type="number">
+```
+
+- .trim
+如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：
+
+```html
+<input v-model.trim="msg">
+``` 
 
 ---
+
+### 样式绑定
+
+> 操作元素的class列表和内联样式是数据绑定的一个常见需求，因为他们都是属性，所以可用`v-bind`处理它们,Vue为了防止字符串拼接带来的麻烦和易错，将v-bind用于class 和 style 时，做了增强，表达式结果的类型除了字符串之外，还可以是对象或数组。
+
+- v-bind:class
+- v-bind:style
+
+```html
+<!--设置一个对象 -->
+<div v-bind:class="{active: isActive}"></div>
+
+<!--设置多个属性 -->
+<div class="static" v-bind:class="{active: isActive, 'text-hide': isHide}"></div>
+
+<!--直接绑定对象 -->
+<div v-bind:class="classObject"></div>
+```
+
+```js
+new Vue({
+  el: '#app',
+  data: {
+  isActive: true,
+  isHide: null
+  },
+  computed: {
+    classObject: function () {
+      return {
+        active: this.isActive && !this.error,
+        'text-danger': this.error && this.error.type === 'fatal',
+      }
+    }
+  }
+})
+```
+
+以上算是对象绑定，我们还可以绑定数组.
+
+```html
+<div v-bind:class="[activeClass, errorClass]"></div>
+```
+
+```js
+new Vue({
+  el: '#app',
+  data: {
+  	isActive: true,
+    activeClass: 'active',
+    errorClass: 'text-danger'
+  }
+})
+```
+
+还可以用三元表达式:
+
+```html
+<div v-bind:class="[errorClass ,isActive ? activeClass : '']"></div>
+```
+
+内联样式写法：
+
+```html
+<div id="app">
+    <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">xm</div>
+</div>
+```
+
+也可以直接绑定到对象或数组上：
+
+```html
+<div id="app">
+  <div v-bind:style="styleObject">cml</div>
+  <div v-bind:style="[baseStyles, overridingStyles]">fqq</div>
+</div>
+```
+
+```js
+new Vue({
+  el: '#app',
+  data: {
+    baseStyles: {
+      color: 'green',
+      fontSize: '30px'
+    },
+	overridingStyles: {
+      'font-weight': 'bold'
+    }
+  }
+})
+
+```
+
+> 当 v-bind:style 使用需要特定前缀的 CSS 属性时，如 transform ，Vue.js 会自动侦测并添加相应的前缀。 
+
+----
 
 ### 组件
 
 组件(Component)是Vue最强大的功能之一。可以扩展HTML元素，封装可重用的代码。
+
+- 注册全局组件
+
+```js
+Vue.component(tagName, options)
+```
+> - tagName为组件名
+> - options 为配置选项
+
+```html
+<tagName></tagName>
+```
+
+demo:
+
+```html
+<div id="app">
+    <runoob></runoob>
+</div>
+ 
+<script>
+// 注册
+Vue.component('runoob', {
+  template: '<h1>自定义组件!</h1>'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+- 注册局部组件
+可以在实例选项中注册局部组件，这样组件只能在这个实例中使用
+
+```html
+<div id="app">
+    <runoob></runoob>
+</div>
+ 
+<script>
+var Child = {
+  template: '<h1>自定义组件!</h1>'
+}
+ 
+// 创建根实例
+new Vue({
+  el: '#app',
+  components: {
+    // <runoob> 将只在父模板可用
+    'runoob': Child
+  }
+})
+</script>
+```
+
+- Props
+prop 是父组件用来传递数据的一个自定义属性, 父组件的数据需要通过`props`把数据传给子组件，子组件需要显示地用props选项声明"props"
+
+```html
+<div id="app">
+    <child message="hello!"></child>
+</div>
+ 
+<script>
+// 注册
+Vue.component('child', {
+  // 声明 props
+  props: ['message'],
+  // 同样也可以在 vm 实例中像 "this.message" 这样使用
+  template: '<span>{{ message }}</span>'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+动态Props类似于用 v-bind 绑定 HTML 特性到一个表达式，也可以用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件：
+
+```html
+<div id="app">
+    <div>
+      <input v-model="parentMsg">
+      <br>
+      <child v-bind:message="parentMsg"></child>
+    </div>
+</div>
+ 
+<script>
+// 注册
+Vue.component('child', {
+  // 声明 props
+  props: ['message'],
+  // 同样也可以在 vm 实例中像 "this.message" 这样使用
+  template: '<span>{{ message }}</span>'
+})
+// 创建根实例
+new Vue({
+  el: '#app',
+  data: {
+    parentMsg: '父组件内容'
+  }
+})
+</script>
+```
+
+> prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。
+
+- Props验证
+组件可以为 props 指定验证要求。prop 是一个对象而不是字符串数组时，它包含验证要求：
+
+```js
+Vue.component('example', {
+  props: {
+    // 基础类型检测 （`null` 意思是任何类型都可以）
+    propA: Number,
+    // 多种类型
+    propB: [String, Number],
+    // 必传且是字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 数字，有默认值
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 数组／对象的默认值应当由一个工厂函数返回
+    propE: {
+      type: Object,
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        return value > 10
+      }
+    }
+  }
+})
+```
+
+type可以是下面原生构造器：
+
+`String`, `Number`, `Boolean`, `Function`, `Object`, `Array`
+
+- 自定义事件
+
+父组件是使用 props 传递数据给子组件，但如果子组件要把数据传递回去，就需要使用自定义事件！
+我们可以使用 v-on 绑定自定义事件, 每个 Vue 实例都实现了事件接口(Events interface)
+
+	- 使用 $on(eventName) 监听事件
+	- 使用 $emit(eventName) 触发事件
+
+```html
+<div id="app">
+    <div id="counter-event-example">
+      <p>{{ total }}</p>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
+    </div>
+</div>
+ 
+<script>
+Vue.component('button-counter', {
+  template: '<button v-on:click="increment">{{ counter }}</button>',
+  data: function () {
+    return {
+      counter: 0
+    }
+  },
+  methods: {
+    increment: function () {
+      this.counter += 1
+      this.$emit('increment')
+    }
+  },
+})
+new Vue({
+  el: '#counter-event-example',
+  data: {
+    total: 0
+  },
+  methods: {
+    incrementTotal: function () {
+      this.total += 1
+    }
+  }
+})
+</script>
+```
+如果你想在某个组件的根元素上监听一个原生事件。可以使用 .native 修饰 v-on 
+
+```html
+<my-component v-on:click.native="doTheThing"></my-component>
+```
+
+### 计算属性与观察者
+
+`computed`,在处理一些复杂逻辑时，我们可以用计算属性。
+
+```html
+<div id="app">
+  <p>原始字符串: {{ message }}</p>
+  <p>计算后反转字符串: {{ reversedMessage }}</p>
+</div>
+ 
+<script>
+var vm = new Vue({
+  el: '#app',
+  data: {
+    message: 'Runoob!'
+  },
+  computed: {
+    // 计算属性的 getter
+    reversedMessage: function () {
+      // `this` 指向 vm 实例
+      return this.message.split('').reverse().join('')
+    }
+  }
+})
+</script>
+```
+
+计算属性的setter和getter
+
+```js
+// ...
+computed: {
+  fullName: {
+    // getter
+    get: function () {
+      return this.firstName + ' ' + this.lastName
+    },
+    // setter
+    set: function (newValue) {
+      var names = newValue.split(' ')
+      this.firstName = names[0]
+      this.lastName = names[names.length - 1]
+    }
+  }
+}
+// ..
+```
+计算属性默认只有 getter ，不过在需要时你也可以提供一个 setter 
+
+computed VS method
+
+我们可以通过在表达式中调用方法来达到同样的效果：
+
+```html
+<p>Reversed message: "{{ reversedMessage() }}"</p>
+
+<script>
+// 在组件中
+methods: {
+  reversedMessage: function () {
+    return this.message.split('').reverse().join('')
+  }
+}
+</script>
+```
+
+我们可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+
+```js
+computed: {
+  now: function () {
+    return Date.now()
+  }
+}
+```
+
+computed VS watch(倾听属性)
+
+Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：侦听属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的做法是使用计算属性而不是命令式的 watch 回调
+
+```html
+<div id="demo">{{ fullName }}</div>
+<script>
+var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar',
+    fullName: 'Foo Bar'
+  },
+  watch: {
+    firstName: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    },
+    lastName: function (val) {
+      this.fullName = this.firstName + ' ' + val
+    }
+  }
+})
+</script>
+```
+
+```js
+var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar'
+  },
+  computed: {
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName
+    }
+  }
+})
+```
+
+- 倾听器
+
+虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。这就是为什么 Vue 通过 watch 选项提供了一个更通用的方法，来响应数据的变化。当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的
+
+```html
+<div id="watch-example">
+  <p>
+    Ask a yes/no question:
+    <input v-model="question">
+  </p>
+  <p>{{ answer }}</p>
+</div>
+<!-- 因为 AJAX 库和通用工具的生态已经相当丰富，Vue 核心代码没有重复 -->
+<!-- 提供这些功能以保持精简。这也可以让你自由选择自己更熟悉的工具。 -->
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+<script>
+var watchExampleVM = new Vue({
+  el: '#watch-example',
+  data: {
+    question: '',
+    answer: 'I cannot give you an answer until you ask a question!'
+  },
+  watch: {
+    // 如果 `question` 发生改变，这个函数就会运行
+    question: function (newQuestion) {
+      this.answer = 'Waiting for you to stop typing...'
+      this.getAnswer()
+    }
+  },
+  methods: {
+    // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
+    // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
+    // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
+    // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
+    // 请参考：https://lodash.com/docs#debounce
+    getAnswer: _.debounce(
+      function () {
+        if (this.question.indexOf('?') === -1) {
+          this.answer = 'Questions usually contain a question mark. ;-)'
+          return
+        }
+        this.answer = 'Thinking...'
+        var vm = this
+        axios.get('https://yesno.wtf/api')
+          .then(function (response) {
+            vm.answer = _.capitalize(response.data.answer)
+          })
+          .catch(function (error) {
+            vm.answer = 'Error! Could not reach the API. ' + error
+          })
+      },
+      // 这是我们为判定用户停止输入等待的毫秒数
+      500
+    )
+  }
+})
+</script>
+```
+
+> 使用 watch 选项允许我们执行异步操作 (访问一个 API)，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这些都是计算属性无法做到的。
+
+
+
 
 
