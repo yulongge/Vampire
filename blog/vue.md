@@ -1499,7 +1499,16 @@ var watchExampleVM = new Vue({
 
 > 使用 watch 选项允许我们执行异步操作 (访问一个 API)，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这些都是计算属性无法做到的。
 
+## 衍生
 
+- vue-router
+- vuex
 
+---
+
+## 参考
+
+- https://cn.vuejs.org/ 
+- http://www.runoob.com/vue2/vue-tutorial.html 
 
 
