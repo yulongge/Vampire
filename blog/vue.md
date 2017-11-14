@@ -1,6 +1,6 @@
 # Vue
 
-### 作者
+## 作者
 
 `尤雨溪`(Evan You)
 
@@ -8,21 +8,17 @@
 - [知乎](https://www.zhihu.com/people/evanyou/activities)
 - [微博](https://weibo.com/arttechdesign?is_hot=1)
 
----
-
 ## 简介
 
-Vue
+`Vue`
 
 `/vju:/`, 类似于View
 
 一套构建用户界面的`渐进式框架`。采用`自底向上增量开发`的设计。它只关注视图层，容易上手，便于与第三方库整合。
 
-对于渐进式(Progressive)的理解: 渐进的，一步一步，不必一竿子把所有东西都用上 
+对于渐进式(Progressive)的理解: 渐进的，一步一步，不必一竿子把所有东西都用上
 
-> [渐进式前端解决方案](https://mp.weixin.qq.com/s?__biz=MzIwNjQwMzUwMQ==&mid=2247484393&idx=1&sn=142b8e37dfc94de07be211607e468030&chksm=9723612ba054e83db6622a891287af119bb63708f1b7a09aed9149d846c9428ad5abbb822294&mpshare=1&scene=1&srcid=1026oUz3521V74ua0uwTcIWa&from=groupmessage&isappinstalled=0#wechat_redirect) 
-
----
+> [渐进式前端解决方案](https://mp.weixin.qq.com/s?__biz=MzIwNjQwMzUwMQ==&mid=2247484393&idx=1&sn=142b8e37dfc94de07be211607e468030&chksm=9723612ba054e83db6622a891287af119bb63708f1b7a09aed9149d846c9428ad5abbb822294&mpshare=1&scene=1&srcid=1026oUz3521V74ua0uwTcIWa&from=groupmessage&isappinstalled=0#wechat_redirect)
 
 ## 安装
 
@@ -32,8 +28,6 @@ Vue.js不支持IE8及其以下版本，因为Vue.js使用的`ECMAScript5`的特�
 
 > http://caniuse.com/#feat=es5
 
----
-
 - 直接引入`<script>`标签
   + CDN
   + [unpkg](https://unpkg.com/vue) : npm 发布后立即同步
@@ -42,15 +36,12 @@ Vue.js不支持IE8及其以下版本，因为Vue.js使用的`ECMAScript5`的特�
 
 Vue会被注册一个全局变量。在开发环境中引入开发环境版本，包含完整的警告和调试模式，对开发更加友好!
 
----
 
 - Bower
 
 ```shell
 bower install vue
 ```
-
----
 
 - NPM
 
@@ -59,7 +50,6 @@ bower install vue
 ```shell
 npm install vue
 ```
----
 
 在NPM包的`dist/`目录下，你会找到许多不同的构建版本的Vue.js.
 
@@ -70,7 +60,6 @@ npm install vue
 |完整版本(生产环境)|vue.min.js|||
 |只含有运行时版本(生产环境)|vue.runtime.min.js|||
 
----
 
 > - 完整版本(Full)：包含编译器(compiler)和运行时(runtime)的构建版本。
 > - 编译器(Compiler)：负责将模板字符串编译成 JavaScript 渲染函数(render function)的代码。
@@ -79,7 +68,6 @@ npm install vue
 > - CommonJS：CommonJS 版本用于较早期的打包器(bundler)（例如 browserify 或 webpack 1 等）中。用于这些打包器的默认文件(pkg.main)，是只含有运行时(Runtime only)的 CommonJS 构建版本(vue.runtime.common.js)
 > - ES Module：ES 模块版本构建用于现代打包器（例如 webpack 2 或 rollup 等）中。用于这些打包器的默认文件(pkg.module)，是只含有运行时(Runtime only)的 ES Module 构建版本(vue.runtime.esm.js)。
 
----
 
 ### 命令行接口工具
 
@@ -98,26 +86,12 @@ npm run dev
 
 > 对于初学者来说，不建议使用cli工具，影响我们学习，对于老手来说，也许我们也不屑于使用这个，当然我们都是很有自信的。
 
----
 
 ## 语法
-
-
-> Vue实例的创建，语法，事件处理
-
----
 
 ### Vue实例
 
 > 每个Vue应用都是通过Vue函数创建一个新的Vue实例开始的.
-
-```js
-var vm = new Vue({
-	//选项
-})
-```
-
----
 
 ```js
 var vm = new Vue({
@@ -142,7 +116,6 @@ var vm = new Vue({
   // 杂项
  })
 ```
----
 
 - demo:
 
@@ -162,13 +135,9 @@ var app = new Vue({
 
 这样就创建了一个实例，创建时你可以传入一个选项对象。
 
----
-
 #### 实例的生命的周期
 
 ![vue-lifecycle](https://yulongge.github.io/images/vue/vue_lifecycle.png)
-
----
 
 它可以总共分为8个阶段：
 
@@ -181,13 +150,9 @@ var app = new Vue({
 - beforeDestroy（销毁前）,
 - destroyed（销毁后）
 
----
-
 如果熟悉react的话可以来回想一下:
 
 ![react-lifecycle](https://yulongge.github.io/ppt/img/react.png)
-
----
 
 ### 模板语法
 
@@ -197,8 +162,6 @@ Vue使用基于HTML的模板语法，允许开发者声明式的将DOM绑定至�
 
 当然你也可以不用模板，直接写渲染(render)函数，使用可选的JSX语法。
 
----
-
 #### 文本
 
 数据绑定使用了`Mustache`语法(双大括号)
@@ -206,7 +169,6 @@ Vue使用基于HTML的模板语法，允许开发者声明式的将DOM绑定至�
 ```html
 <span>Message: {{ msg }}</span>
 ```
----
 
 #### 原始HTML
 
@@ -220,7 +182,6 @@ Vue使用基于HTML的模板语法，允许开发者声明式的将DOM绑定至�
 
 > 渲染任何html是很危险的，很容易导致xss攻击
 
----
 
 #### 特性
 
@@ -233,7 +194,6 @@ Mustache 语法不能作用在HTML特性上，这时候应该使用v-bind指令
 
 > 适用于布尔类型，如果求值结果是`falsy`(falsy不是false)的值，属性将会被删除
 
----
 
 #### 使用JavaScript表达式
 
@@ -257,7 +217,6 @@ Mustache 语法不能作用在HTML特性上，这时候应该使用v-bind指令
 //语句和流控制，都不会生效
 ```
 
----
 
 ### 指令
 
@@ -274,8 +233,6 @@ Mustache 语法不能作用在HTML特性上，这时候应该使用v-bind指令
 - v-model
 - v-html
 
----
-
 #### 参数
 
 一些指令能够接收一个`参数`, 在指令名称之后以冒号表示.
@@ -288,8 +245,6 @@ Mustache 语法不能作用在HTML特性上，这时候应该使用v-bind指令
 <a v-on:click="doSomething">...</a>
 ```
 
----
-
 #### 修饰符
 
 修饰符(Modifiers)是以半角句号`.`指明的特殊后缀，用于指出一个指令该以特殊方式绑定。
@@ -298,8 +253,6 @@ Mustache 语法不能作用在HTML特性上，这时候应该使用v-bind指令
 <!-- .prevent 修饰符告诉v-on指令对于触发的事件调用`event.preventDefault();` -->
 <form v-on:submit.prevent="onSubmit">...</form>
 ```
-
----
 
 #### 自定义指令
 
@@ -326,7 +279,6 @@ new Vue({
 //调用
 //<input v-focus>
 ```
----
 
 #### 指令的钩子函数
 
@@ -336,7 +288,6 @@ new Vue({
 - componentUpdated : 所在组件的 VNode 及其孩子的 VNode 全部更新时调用
 - unbind : 只调用一次，指令与元素解绑时调用
 
----
 
 #### 钩子函数参数
 
@@ -347,41 +298,11 @@ new Vue({
 	+ oldValue : 指令绑定的前一个值，仅在 `update` 和 `componentUpdated` 钩子中可用。无论值是否改变都可用
 	+ expression : 绑定值的字符串形式。例如 `v-my-directive="1 + 1"` ，`expression` 的值是 `"1 + 1"`
 	+ arg : 传给指令的参数。例如 `v-my-directive:foo`，arg 的值是 `"foo"`。
-	+ modifiers : 一个包含修饰符的对象。例如：`v-my-directive.foo.bar`, 修饰符对象 modifiers 的值是 `{ foo: true, bar: true }` 
-
+	+ modifiers : 一个包含修饰符的对象。例如：`v-my-directive.foo.bar`, 修饰符对象 modifiers 的值是 `{ foo: true, bar: true }`
 - vnode : Vue 编译生成的虚拟节点
 - oldVnode : 上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用
 
 > 除了el之外，其他的参数都应该是只读的，尽量不要修改他们。
-
----
-
-- demo:
-
-```html
-<div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
-<script>
-Vue.directive('demo', {
-  bind: function (el, binding, vnode) {
-    var s = JSON.stringify
-    el.innerHTML =
-      'name: '       + s(binding.name) + '<br>' +
-      'value: '      + s(binding.value) + '<br>' +
-      'expression: ' + s(binding.expression) + '<br>' +
-      'argument: '   + s(binding.arg) + '<br>' +
-      'modifiers: '  + s(binding.modifiers) + '<br>' +
-      'vnode keys: ' + Object.keys(vnode).join(', ')
-  }
-})
-new Vue({
-  el: '#hook-arguments-example',
-  data: {
-    message: 'hello!'
-  }
-})
-</script>
-```
----
 
 #### 简写
 
@@ -392,9 +313,6 @@ Vue.derective('color-swatch', function(el, binding) {
 	el.style.backgroundColor = binding.value
 })
 ```
-
----
-
 
 ### 条件语句
 
@@ -440,7 +358,6 @@ Vue会尽可能高效地渲染元素，通常会复用已有的元素而不是�
 
 代码切换loginType将不会清除用户已经输入的内容。因为两个模板使用了相同的元素，`input`不会被替换掉，仅仅替换了它的placeholder.
 
----
 
 但是这样也不总是符合实际需求的，所以Vue为你提供了一种方式来表达`这俩元素是完全独立的，不要复用它们的`.只需添加一个具有唯一值的`key`属性即可:
 
@@ -455,8 +372,6 @@ Vue会尽可能高效地渲染元素，通常会复用已有的元素而不是�
 </template>
 ```
 
----
-
 - `v-show`
 
 > 简单的切换元素css属性display
@@ -467,7 +382,6 @@ Vue会尽可能高效地渲染元素，通常会复用已有的元素而不是�
 
 > v-show 不支持`<template>` ，也不支持`v-else`
 
----
 
 - `v-if` vs `v-show`
 
@@ -479,7 +393,6 @@ Vue会尽可能高效地渲染元素，通常会复用已有的元素而不是�
 
 一般来说，`v-if`有更高的切换开销，而`v-show`有更高的初始渲染开销。因此，如果需要频繁的切换，则使用`v-show`，如果在运行时条件很少改变，则使用`v-if`较好.
 
----
 
 ### 循环语句
 
@@ -503,8 +416,6 @@ Vue会尽可能高效地渲染元素，通常会复用已有的元素而不是�
 
 `v-for` 还支持一个可选的第二个参数为当前项的索引，也可以ongoing`of` 代替 `in`作为分隔符，因为它是最近JavaScript迭代器的语法。
 
----
-
 ```js
 var example1 = new Vue({
   el: '#example-1',
@@ -516,8 +427,6 @@ var example1 = new Vue({
   }
 })
 ```
-
----
 
 `v-for`还可以用来迭代对象的属性
 
@@ -539,9 +448,6 @@ var example1 = new Vue({
 
 也可以用第二个参数为键名, 第三个参数为索引
 
----
-
-
 ```js
 new Vue({
   el: '#v-for-object',
@@ -557,8 +463,6 @@ new Vue({
 
 遍历对象时，是按Object.keys()的结果遍历的。
 
----
-
 `key`
 
 Vue用`v-for`渲染列表是，默认用`就地复用`策略。这种模式是高效的，但是只适用于不依赖子组件状态或临时DOM状态的渲染，为了追踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一的key属性，理想的`key`值是有唯一的id，用`v-bind`来绑定`key`值。
@@ -567,13 +471,8 @@ Vue用`v-for`渲染列表是，默认用`就地复用`策略。这种模式是�
 <div v-for="item in items" v-bind:key="item.id">....</div>
 ```
 
----
-
 - `数组更新检测`
 	- 变异方法
-
-		> Vue包含一组观察数组的变异方法，所以它们也将会触发视图更新。
-
 		+ push()
 		+ pop()
 		+ shift()
@@ -582,14 +481,14 @@ Vue用`v-for`渲染列表是，默认用`就地复用`策略。这种模式是�
 		+ sort()
 		+ reverse()
 
+	> Vue包含一组观察数组的变异方法，所以它们也将会触发视图更新。
+
 ```js
 //打开控制台
 example1.items.push({ message: 'longgege coming...'});
 
 //会引起列表重新渲染
 ```
-
----
 
 - 替换数组
 	+ filter()
@@ -606,8 +505,6 @@ example1.items = example1.items.filter(function (item) {
 
 幸运的是，Vue为了使得DOM元素得到最大范围的重用实现了一些机智得到，启发式的方法，所以这样替换也是非常高效的操作。
 
----
-
 - 注意事项
 > 由于JavaScript的限制，Vue不能检测一下变动的数组;
 
@@ -621,13 +518,11 @@ vm.items[indexOfItem] = newValue;
 Vue.set(example .items, indexOfItem, newValue);
 example.items.splice(indexOfItem, 1, newValue)
 
-
 //修改长度
 vm.items.length = newLength;
 //解决办法
 example.items.splice(newLength)
 ```
----
 
 - `对象更改检测`
 
@@ -665,8 +560,6 @@ this.user = Object.assign({}, this.user, {
 
 ```
 
----
-
 ### 监听事件
 
 `v-on`指令监听DOM事件触发。
@@ -689,7 +582,6 @@ this.user = Object.assign({}, this.user, {
 	</button>
 </div>
 ```
----
 
 ```js
 var example1 = new Vue({
@@ -714,7 +606,6 @@ var example1 = new Vue({
 
 example1.greet() // 也可以用JavaScript 直接调用
 ```
----
 
 - `事件修饰符`
 
@@ -972,7 +863,7 @@ new Vue({
 
 ```html
 <input v-model.trim="msg">
-``` 
+```
 
 ---
 
@@ -982,8 +873,6 @@ new Vue({
 
 - v-bind:class
 - v-bind:style
-
----
 
 ```html
 <!--设置一个对象 -->
@@ -1014,8 +903,6 @@ new Vue({
 })
 ```
 
----
-
 以上算是对象绑定，我们还可以绑定数组.
 
 ```html
@@ -1033,8 +920,6 @@ new Vue({
 })
 ```
 
----
-
 还可以用三元表达式:
 
 ```html
@@ -1048,8 +933,6 @@ new Vue({
     <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">xm</div>
 </div>
 ```
-
----
 
 也可以直接绑定到对象或数组上：
 
@@ -1073,18 +956,15 @@ new Vue({
     }
   }
 })
-
 ```
 
-当 v-bind:style 使用需要特定前缀的 CSS 属性时，如 transform ，Vue.js 会自动侦测并添加相应的前缀。 
 
----
+当 v-bind:style 使用需要特定前缀的 CSS 属性时，如 transform ，Vue.js 会自动侦测并添加相应的前缀。
 
 ### 组件
 
 组件(Component)是Vue最强大的功能之一。可以扩展HTML元素，封装可重用的代码。
 
----
 
 - 注册全局组件
 
@@ -1104,7 +984,7 @@ demo:
 <div id="app">
     <runoob></runoob>
 </div>
- 
+
 <script>
 // 注册
 Vue.component('runoob', {
@@ -1117,8 +997,6 @@ new Vue({
 </script>
 ```
 
----
-
 - 注册局部组件
 
 可以在实例选项中注册局部组件，这样组件只能在这个实例中使用
@@ -1127,12 +1005,12 @@ new Vue({
 <div id="app">
     <runoob></runoob>
 </div>
- 
+
 <script>
 var Child = {
   template: '<h1>自定义组件!</h1>'
 }
- 
+
 // 创建根实例
 new Vue({
   el: '#app',
@@ -1143,7 +1021,6 @@ new Vue({
 })
 </script>
 ```
----
 
 - Props
 prop 是父组件用来传递数据的一个自定义属性, 父组件的数据需要通过`props`把数据传给子组件，子组件需要显示地用props选项声明"props"
@@ -1152,7 +1029,7 @@ prop 是父组件用来传递数据的一个自定义属性, 父组件的数据�
 <div id="app">
     <child message="hello!"></child>
 </div>
- 
+
 <script>
 // 注册
 Vue.component('child', {
@@ -1167,7 +1044,6 @@ new Vue({
 })
 </script>
 ```
----
 
 动态Props类似于用 v-bind 绑定 HTML 特性到一个表达式，也可以用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件：
 
@@ -1199,8 +1075,6 @@ new Vue({
 
 > prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。
 
----
-
 - Props验证
 组件可以为 props 指定验证要求。prop 是一个对象而不是字符串数组时，它包含验证要求：
 
@@ -1212,38 +1086,15 @@ Vue.component('example', {
     // 多种类型
     propB: [String, Number],
     // 必传且是字符串
-    propC: {
-      type: String,
-      required: true
-    },
-    // 数字，有默认值
-    propD: {
-      type: Number,
-      default: 100
-    },
-    // 数组／对象的默认值应当由一个工厂函数返回
-    propE: {
-      type: Object,
-      default: function () {
-        return { message: 'hello' }
-      }
-    },
-    // 自定义验证函数
-    propF: {
-      validator: function (value) {
-        return value > 10
-      }
-    }
+    ...
   }
 })
 ```
----
 
 type可以是下面原生构造器：
 
 `String`, `Number`, `Boolean`, `Function`, `Object`, `Array`
 
----
 
 - 自定义事件
 	- 使用 $on(eventName) 监听事件
@@ -1251,8 +1102,6 @@ type可以是下面原生构造器：
 
 父组件是使用 props 传递数据给子组件，但如果子组件要把数据传递回去，就需要使用自定义事件！
 我们可以使用 v-on 绑定自定义事件, 每个 Vue 实例都实现了事件接口(Events interface)
-
----
 
 ```html
 <div id="app">
@@ -1262,7 +1111,7 @@ type可以是下面原生构造器：
       <button-counter v-on:increment="incrementTotal"></button-counter>
     </div>
 </div>
- 
+
 <script>
 Vue.component('button-counter', {
   template: '<button v-on:click="increment">{{ counter }}</button>',
@@ -1292,15 +1141,11 @@ new Vue({
 </script>
 ```
 
----
-
-如果你想在某个组件的根元素上监听一个原生事件。可以使用 .native 修饰 v-on 
+如果你想在某个组件的根元素上监听一个原生事件。可以使用 .native 修饰 v-on
 
 ```html
 <my-component v-on:click.native="doTheThing"></my-component>
 ```
-
----
 
 ### 计算属性与观察者
 
@@ -1311,7 +1156,7 @@ new Vue({
   <p>原始字符串: {{ message }}</p>
   <p>计算后反转字符串: {{ reversedMessage }}</p>
 </div>
- 
+
 <script>
 var vm = new Vue({
   el: '#app',
@@ -1328,8 +1173,6 @@ var vm = new Vue({
 })
 </script>
 ```
-
----
 
 计算属性的setter和getter
 
@@ -1352,9 +1195,7 @@ computed: {
 // ..
 ```
 
-计算属性默认只有 getter ，不过在需要时你也可以提供一个 setter 
-
----
+计算属性默认只有 getter ，不过在需要时你也可以提供一个 setter
 
 computed VS method
 
@@ -1373,8 +1214,6 @@ methods: {
 </script>
 ```
 
----
-
 我们可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
 
 ```js
@@ -1384,8 +1223,6 @@ computed: {
   }
 }
 ```
-
----
 
 computed VS watch(倾听属性)
 
@@ -1413,8 +1250,6 @@ var vm = new Vue({
 </script>
 ```
 
----
-
 ```js
 var vm = new Vue({
   el: '#demo',
@@ -1429,13 +1264,10 @@ var vm = new Vue({
   }
 })
 ```
----
 
 - 倾听器
 
 虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。这就是为什么 Vue 通过 watch 选项提供了一个更通用的方法，来响应数据的变化。当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的
-
----
 
 ```html
 <div id="watch-example">
@@ -1451,7 +1283,6 @@ var vm = new Vue({
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 
 ```
----
 
 ```js
 var watchExampleVM = new Vue({
@@ -1468,11 +1299,6 @@ var watchExampleVM = new Vue({
     }
   },
   methods: {
-    // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
-    // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
-    // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
-    // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
-    // 请参考：https://lodash.com/docs#debounce
     getAnswer: _.debounce(
       function () {
         if (this.question.indexOf('?') === -1) {
@@ -1495,7 +1321,6 @@ var watchExampleVM = new Vue({
   }
 })
 ```
----
 
 > 使用 watch 选项允许我们执行异步操作 (访问一个 API)，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这些都是计算属性无法做到的。
 
@@ -1504,11 +1329,7 @@ var watchExampleVM = new Vue({
 - vue-router
 - vuex
 
----
-
 ## 参考
 
-- https://cn.vuejs.org/ 
-- http://www.runoob.com/vue2/vue-tutorial.html 
-
-
+- https://cn.vuejs.org/
+- http://www.runoob.com/vue2/vue-tutorial.html
