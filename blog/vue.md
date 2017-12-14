@@ -327,8 +327,6 @@ Vue.derective('color-swatch', function(el, binding) {
 <h3 v-else>Don't known</h3>
 ```
 
----
-
 因为是指令，所以只能添加到元素上，所以如果想切换多个元素，可以把一个`<template>`元素当做一个不可见的包裹元素，并在上面使用`v-if`.最终渲染结果将不包含`<template>`元素.
 
 ```html
@@ -338,7 +336,6 @@ Vue.derective('color-swatch', function(el, binding) {
 	<h1>....</h1>
 </template>
 ```
----
 
 用`key`管理可复用的元素
 
@@ -543,8 +540,6 @@ Vue.set(vm.user, 'age', 18);
 this.$set(this.user, 'age', 18)
 ```
 
----
-
 有时候需要为已有对象赋予多个新属性，比如Object.assign()或者_.extend().
 
 ```js
@@ -619,8 +614,6 @@ Vue 为了解决这个问题，提供了`事件修饰符`,通过`(.)`表示的�
 - .self
 - .once
 
----
-
 ```html
 !-- 阻止单击事件冒泡 -->
 <a v-on:click.stop="doThis"></a>
@@ -640,8 +633,6 @@ Vue 为了解决这个问题，提供了`事件修饰符`,通过`(.)`表示的�
 
 使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 @click.prevent.self 会阻止所有的点击，而 @click.self.prevent 只会阻止元素上的点击。
 
----
-
 - `键值修饰符`
 
 在监听键盘事件时，我们经常需要监测常见的键值。Vue 允许为 v-on 在监听键盘事件时添加关键修饰符
@@ -659,7 +650,6 @@ Vue 为了解决这个问题，提供了`事件修饰符`,通过`(.)`表示的�
 <!-- 缩写语法 -->
 <input @keyup.enter="submit">
 ```
----
 
 全部的按键别名:
 
@@ -677,9 +667,6 @@ Vue 为了解决这个问题，提供了`事件修饰符`,通过`(.)`表示的�
 - .shift
 - .meta
 
----
-
-
 ### 表单
 
 Vue用v-model指令在表单控件元素上创建双向数据绑定, `v-model`会根据控件类型自动选取正确的方法来更新元素。
@@ -695,8 +682,6 @@ Vue用v-model指令在表单控件元素上创建双向数据绑定, `v-model`�
 - 单选按钮
 - 选择列表
 
----
-
 `文本与多行文本`
 
 ```html
@@ -706,8 +691,6 @@ Vue用v-model指令在表单控件元素上创建双向数据绑定, `v-model`�
 <textarea v-model="message" placeholder="add multiple lines" />
 
 ```
-
----
 
 `复选框`
 
@@ -736,7 +719,6 @@ new Vue({
   }
 })
 ```
----
 
 `单选按钮`
 
@@ -761,7 +743,6 @@ new Vue({
   }
 })
 ```
----
 
 `选择列表`
 
@@ -785,7 +766,6 @@ new Vue({
   }
 })
 ```
----
 
 `多选列表`
 
@@ -809,7 +789,6 @@ new Vue({
   }
 })
 ```
----
 
 动态选项用`v-for`渲染
 
@@ -835,8 +814,6 @@ new Vue({
   }
 })
 ```
-
----
 
 - 修饰符
 
@@ -864,8 +841,6 @@ new Vue({
 ```html
 <input v-model.trim="msg">
 ```
-
----
 
 ### 样式绑定
 
