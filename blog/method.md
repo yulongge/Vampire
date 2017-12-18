@@ -4,127 +4,126 @@
 
 ### 声明
 
-1. function命令
+1. `function` 命令
 
 - `function`命令声明的代码区块，就是一个函数。`function`命令后面是函数名，函数名后面是一对圆括号，里面是传入函数的参数。函数体放在大括号里面。
 
-```js
-function print(web) {
-    console.log(web, ' print');
-}
-
-// print('create a function');
-```
+    ```js
+    function print(web) {
+        console.log(web, ' print');
+    }
+    // print('create a function');
+    ```
 
 2. 函数表达式
 
 - 除了用`function`命令声明函数，还可以采用变量赋值的写法。
 
-```js
-var print = function(web) {
-    console.log(web, 'print');
-}
-```
+    ```js
+    var print = function(web) {
+        console.log(web, 'print');
+    }
+    ```
 
-这种写法将一个匿名函数赋值给变量。这时，这个匿名函数又称函数表达式（Function Expression），因为赋值语句的等号右侧只能放表达式。
+    这种写法将一个匿名函数赋值给变量。这时，这个匿名函数又称函数表达式（Function Expression），因为赋值语句的等号右侧只能放表达式。
 
-> 采用函数表达式声明函数时，function命令后面不带有函数名。如果加上函数名，该函数名只在函数体内部有效，在函数体外部无效。
+    > 采用函数表达式声明函数时，function命令后面不带有函数名。如果加上函数名，该函数名只在函数体内部有效，在函数体外部无效。
 
-```js
-var print = function x(){
-  console.log(typeof x);
-};
+    ```js
+    var print = function x(){
+      console.log(typeof x);
+    };
 
-x
-// ReferenceError: x is not defined
+    x
+    // ReferenceError: x is not defined
 
-print()
-// function
-```
+    print()
+    // function
+    ```
 
-这个x只在函数体内部可用，指代函数表达式本身，其他地方都不可用。这种写法的用处有两个，
+    这个x只在函数体内部可用，指代函数表达式本身，其他地方都不可用。这种写法的用处有两个，
 
-- 一是可以在函数体内部调用自身，
-- 二是方便除错（除错工具显示函数调用栈时，将显示函数名，而不再显示这里是一个匿名函数）。
+    - 一是可以在函数体内部调用自身，
+    - 二是方便除错（除错工具显示函数调用栈时，将显示函数名，而不再显示这里是一个匿名函数）。
 
-> 函数的表达式需要在语句的结尾加上分号，表示语句结束。而函数的声明在结尾的大括号后面不用加分号。
+    > 函数的表达式需要在语句的结尾加上分号，表示语句结束。而函数的声明在结尾的大括号后面不用加分号。
 
 3. Function构造函数
 
-```js
-var add = new Function(
-  'x',
-  'y',
-  'return x + y'
-);
+    ```js
+    var add = new Function(
+      'x',
+      'y',
+      'return x + y'
+    );
 
-// 等同于
+    // 等同于
 
-function add(x, y) {
-  return x + y;
-}
-```
+    function add(x, y) {
+      return x + y;
+    }
+    ```
 
-在上面代码中，Function构造函数接受三个参数，除了最后一个参数是add函数的“函数体”，其他参数都是add函数的参数。
+    在上面代码中，Function构造函数接受三个参数，除了最后一个参数是add函数的“函数体”，其他参数都是add函数的参数。
 
-你可以传递任意数量的参数给Function构造函数，只有最后一个参数会被当做函数体，如果只有一个参数，该参数就是函数体。
+    你可以传递任意数量的参数给Function构造函数，只有最后一个参数会被当做函数体，如果只有一个参数，该参数就是函数体。
 
-```js
-var foo = new Function(
-  'return "hello world"'
-);
+    ```js
+    var foo = new Function(
+      'return "hello world"'
+    );
 
-// 等同于
+    // 等同于
 
-function foo() {
-  return 'hello world';
-}
-```
+    function foo() {
+      return 'hello world';
+    }
+    ```
 
-Function构造函数可以不使用new命令，返回结果完全一样。
+    Function构造函数可以不使用new命令，返回结果完全一样。
 
-总的来说，这种声明函数的方式非常不直观，几乎无人使用。
+    总的来说，这种声明函数的方式非常不直观，几乎无人使用。
 
-#### 箭头函数
+4. 箭头函数
 
-ES6 允许使用“箭头”（=>）定义函数。
+    ES6 允许使用“箭头”（=>）定义函数。
 
-```js
-var f = v => v;
+    ```js
+    var f = v => v;
 
-//等同于
+    //等同于
 
-var f = function(v) {
-  return v;
-};
-```
+    var f = function(v) {
+      return v;
+    };
+    ```
 
-箭头函数有几个使用注意点。
+    箭头函数有几个使用注意点:
 
-（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
+    （1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
 
-（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
+    （2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
 
-（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
+    （3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
 
-（4）不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
+    （4）不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
 
-上面四点中，第一点尤其值得注意。this对象的指向是可变的，但是在箭头函数中，它是固定的。
+    上面四点中，第一点尤其值得注意。this对象的指向是可变的，但是在箭头函数中，它是固定的。
 
-```js
-function foo() {
-  setTimeout(() => {
-    console.log('id:', this.id);
-  }, 100);
-}
+    ```js
+    function foo() {
+      setTimeout(() => {
+        console.log('id:', this.id);
+      }, 100);
+    }
 
-var id = 21;
+    var id = 21;
 
-foo.call({ id: 42 });
-// id: 42
-```
+    foo.call({ id: 42 });
+    // id: 42
+    ```
 
-### 函数重复声明
+#### 函数重复声明
 
 如果同一个函数被多次声明，后面的声明就会覆盖前面的声明。
 
@@ -156,7 +155,7 @@ add(1, 1) // 2
 
 函数体内部的return语句，表示返回。JavaScript引擎遇到return语句，就直接返回return后面的那个表达式的值，后面即使还有语句，也不会得到执行。也就是说，return语句所带的那个表达式，就是函数的返回值。return语句不是必需的，如果没有的话，该函数就不返回任何值，或者说返回undefined
 
-函数可以调用自身，这就是递归（recursion）。下面就是通过递归，计算斐波那契数列的代码。
+函数可以调用自身，这就是递归（recursion）。
 
 ```js
 function fun()
@@ -271,114 +270,114 @@ f() // undefined
 
 1. name属性
 
-name属性返回紧跟在function关键字之后的那个函数名。
+    name属性返回紧跟在function关键字之后的那个函数名。
 
-```js
-function f1() {}
-f1.name // 'f1'
+    ```js
+    function f1() {}
+    f1.name // 'f1'
 
-var f2 = function () {};
-f2.name // ''
+    var f2 = function () {};
+    f2.name // ''
 
-var f3 = function myName() {};
-f3.name // 'myName'
-```
+    var f3 = function myName() {};
+    f3.name // 'myName'
+    ```
 
-上面代码中，函数的name属性总是返回紧跟在function关键字之后的那个函数名。对于f2来说，返回空字符串，匿名函数的name属性总是为空字符串；对于f3来说，返回函数表达式的名字（真正的函数名还是f3，myName这个名字只在函数体内部可用）。
+    上面代码中，函数的name属性总是返回紧跟在function关键字之后的那个函数名。对于f2来说，返回空字符串，匿名函数的name属性总是为空字符串；对于f3来说，返回函数表达式的名字（真正的函数名还是f3，myName这个名字只在函数体内部可用）。
 
-需要注意的是，ES6 对这个属性的行为做出了一些修改。如果将一个匿名函数赋值给一个变量，ES5 的name属性，会返回空字符串，而 ES6 的name属性会返回实际的函数名。
+    需要注意的是，ES6 对这个属性的行为做出了一些修改。如果将一个匿名函数赋值给一个变量，ES5 的name属性，会返回空字符串，而 ES6 的name属性会返回实际的函数名。
 
-```js
-var f = function () {};
+    ```js
+    var f = function () {};
 
-// ES5
-f.name // ""
+    // ES5
+    f.name // ""
 
-// ES6
-f.name // "f"
-```
+    // ES6
+    f.name // "f"
+    ```
 
 2. length 属性
 
-length属性返回函数预期传入的参数个数，即函数定义之中的参数个数。
+    length属性返回函数预期传入的参数个数，即函数定义之中的参数个数。
 
-```js
-function f(a, b) {}
-f.length // 2
-```
+    ```js
+    function f(a, b) {}
+    f.length // 2
+    ```
 
-上面代码定义了空函数f，它的length属性就是定义时的参数个数。不管调用时输入了多少个参数，length属性始终等于2。
+    上面代码定义了空函数f，它的length属性就是定义时的参数个数。不管调用时输入了多少个参数，length属性始终等于2。
 
-length属性提供了一种机制，判断定义时和调用时参数的差异，以便实现面向对象编程的”方法重载“（overload）。
+    length属性提供了一种机制，判断定义时和调用时参数的差异，以便实现面向对象编程的”方法重载“（overload）。
 
-ES6，指定了默认值以后，函数的length属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，length属性将失真。
+    ES6，指定了默认值以后，函数的length属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，length属性将失真。
 
-```js
-(function (a) {}).length // 1
-(function (a = 5) {}).length // 0
-(function (a, b, c = 5) {}).length // 2
-```
+    ```js
+    (function (a) {}).length // 1
+    (function (a = 5) {}).length // 0
+    (function (a, b, c = 5) {}).length // 2
+    ```
 
-如果设置了默认值的参数不是尾参数，那么length属性也不再计入后面的参数了
+    如果设置了默认值的参数不是尾参数，那么length属性也不再计入后面的参数了
 
-这是因为length属性的含义是，该函数预期传入的参数个数。某个参数指定默认值以后，预期传入的参数个数就不包括这个参数了。同理，后文的 rest 参数也不会计入length属性
+    这是因为length属性的含义是，该函数预期传入的参数个数。某个参数指定默认值以后，预期传入的参数个数就不包括这个参数了。同理，后文的 rest 参数也不会计入length属性
 
-```js
-(function (a = 0, b, c) {}).length // 0
-(function (a, b = 1, c) {}).length // 1
-```
+    ```js
+    (function (a = 0, b, c) {}).length // 0
+    (function (a, b = 1, c) {}).length // 1
+    ```
 
 3. toString()
 
-函数的toString方法返回函数的源码。
+    函数的toString方法返回函数的源码。
 
-```js
-function f() {
-  a();
-  b();
-  c();
-}
+    ```js
+    function f() {
+      a();
+      b();
+      c();
+    }
 
-f.toString()
-// function f() {
-//  a();
-//  b();
-//  c();
-// }
-```
+    f.toString()
+    // function f() {
+    //  a();
+    //  b();
+    //  c();
+    // }
+    ```
 
-函数内部的注释也可以返回。
+    函数内部的注释也可以返回。
 
-```js
-function f() {/*
-  这是一个
-  多行注释
-*/}
+    ```js
+    function f() {/*
+      这是一个
+      多行注释
+    */}
 
-f.toString()
-// "function f(){/*
-//   这是一个
-//   多行注释
-// */}"
-```
+    f.toString()
+    // "function f(){/*
+    //   这是一个
+    //   多行注释
+    // */}"
+    ```
 
-利用这一点，可以变相实现多行字符串。
+    利用这一点，可以变相实现多行字符串。
 
-```js
-var multiline = function (fn) {
-  var arr = fn.toString().split('\n');
-  return arr.slice(1, arr.length - 1).join('\n');
-};
+    ```js
+    var multiline = function (fn) {
+      var arr = fn.toString().split('\n');
+      return arr.slice(1, arr.length - 1).join('\n');
+    };
 
-function f() {/*
-  这是一个
-  多行注释
-*/}
+    function f() {/*
+      这是一个
+      多行注释
+    */}
 
-multiline(f);
-// " 这是一个
-//   多行注释"
-```
+    multiline(f);
+    // " 这是一个
+    //   多行注释"
+    ```
 
 ### 函数作用域
 
@@ -440,7 +439,7 @@ console.log(x);  // 5
 
 上面代码中，变量x在条件判断区块之中声明，结果就是一个全局变量，可以在区块之外读取。
 
-2. 函数内部的变量提升
+#### 函数内部的变量提升
 
 与全局作用域一样，函数作用域内部也会产生“变量提升”现象。var命令声明的变量，不管在什么位置，变量声明都会被提升到函数体的头部。
 
@@ -463,7 +462,7 @@ function foo(x) {
 }
 ```
 
-3. 函数本身的作用域
+#### 函数本身的作用域
 
 函数本身也是一个值，也有自己的作用域。它的作用域与变量一样，就是其声明时所在的作用域，与其运行时所在的作用域无关。
 
@@ -525,369 +524,369 @@ f() // 1
 
 1. 概述
 
-函数运行的时候，有时需要提供外部数据，不同的外部数据会得到不同的结果，这种外部数据就叫参数。
+    函数运行的时候，有时需要提供外部数据，不同的外部数据会得到不同的结果，这种外部数据就叫参数。
 
-```js
-function square(x) {
-  return x * x;
-}
+    ```js
+    function square(x) {
+      return x * x;
+    }
 
-square(2) // 4
-square(3) // 9
+    square(2) // 4
+    square(3) // 9
 
-```
+    ```
 
-上式的x就是square函数的参数。每次运行的时候，需要提供这个值，否则得不到结果。
+    上式的x就是square函数的参数。每次运行的时候，需要提供这个值，否则得不到结果。
 
 2. 参数的省略
 
-函数参数不是必需的，Javascript允许省略参数。
+    函数参数不是必需的，Javascript允许省略参数。
 
-```js
-function f(a, b) {
-  return a;
-}
+    ```js
+    function f(a, b) {
+      return a;
+    }
 
-f(1, 2, 3) // 1
-f(1) // 1
-f() // undefined
+    f(1, 2, 3) // 1
+    f(1) // 1
+    f() // undefined
 
-f.length // 2
-```
+    f.length // 2
+    ```
 
-上面代码的函数f定义了两个参数，但是运行时无论提供多少个参数（或者不提供参数），JavaScript都不会报错。
+    上面代码的函数f定义了两个参数，但是运行时无论提供多少个参数（或者不提供参数），JavaScript都不会报错。
 
-被省略的参数的值就变为undefined。需要注意的是，函数的length属性与实际传入的参数个数无关，只反映函数预期传入的参数个数。
+    被省略的参数的值就变为undefined。需要注意的是，函数的length属性与实际传入的参数个数无关，只反映函数预期传入的参数个数。
 
-但是，没有办法只省略靠前的参数，而保留靠后的参数。如果一定要省略靠前的参数，只有显式传入undefined。
+    但是，没有办法只省略靠前的参数，而保留靠后的参数。如果一定要省略靠前的参数，只有显式传入undefined。
 
-```js
-function f(a, b) {
-  return a;
-}
+    ```js
+    function f(a, b) {
+      return a;
+    }
 
-f( , 1) // SyntaxError: Unexpected token ,(…)
-f(undefined, 1) // undefined
-```
+    f( , 1) // SyntaxError: Unexpected token ,(…)
+    f(undefined, 1) // undefined
+    ```
 
-上面代码中，如果省略第一个参数，就会报错。
+    上面代码中，如果省略第一个参数，就会报错。
 
 3. 默认值
 
-通过下面的方法，可以为函数的参数设置默认值。
+    通过下面的方法，可以为函数的参数设置默认值。
 
-```js
-function f(a){
-  a = a || 1;
-  return a;
-}
+    ```js
+    function f(a){
+      a = a || 1;
+      return a;
+    }
 
-f('') // 1
-f(0) // 1
-```
+    f('') // 1
+    f(0) // 1
+    ```
 
-上面代码的||表示“或运算”，即如果a有值，则返回a，否则返回事先设定的默认值（上例为1）。
+    上面代码的||表示“或运算”，即如果a有值，则返回a，否则返回事先设定的默认值（上例为1）。
 
-这种写法会对a进行一次布尔运算，只有为true时，才会返回a。可是，除了undefined以外，0、空字符、null等的布尔值也是false。也就是说，在上面的函数中，不能让a等于0或空字符串，否则在明明有参数的情况下，也会返回默认值。
+    这种写法会对a进行一次布尔运算，只有为true时，才会返回a。可是，除了undefined以外，0、空字符、null等的布尔值也是false。也就是说，在上面的函数中，不能让a等于0或空字符串，否则在明明有参数的情况下，也会返回默认值。
 
-为了避免这个问题，可以采用下面更精确的写法
+    为了避免这个问题，可以采用下面更精确的写法
 
-```js
-function f(a) {
-  (a !== undefined && a !== null) ? a = a : a = 1;
-  return a;
-}
+    ```js
+    function f(a) {
+      (a !== undefined && a !== null) ? a = a : a = 1;
+      return a;
+    }
 
-f() // 1
-f('') // ""
-f(0) // 0
+    f() // 1
+    f('') // ""
+    f(0) // 0
 
-//上面代码中，函数f的参数是空字符或0，都不会触发参数的默认值。
-```
+    //上面代码中，函数f的参数是空字符或0，都不会触发参数的默认值。
+    ```
 
-ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面
+    ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面
 
-```js
-function log(x, y = 'World') {
-  console.log(x, y);
-}
+    ```js
+    function log(x, y = 'World') {
+      console.log(x, y);
+    }
 
-log('Hello') // Hello World
-log('Hello', 'China') // Hello China
-log('Hello', '') // Hello
-```
+    log('Hello') // Hello World
+    log('Hello', 'China') // Hello China
+    log('Hello', '') // Hello
+    ```
 
-使用参数默认值时，函数不能有同名参数。
+    使用参数默认值时，函数不能有同名参数。
 
-```js
-// 不报错
-function foo(x, x, y) {
-  // ...
-}
+    ```js
+    // 不报错
+    function foo(x, x, y) {
+      // ...
+    }
 
-// 报错
-function foo(x, x, y = 1) {
-  // ...
-}
-// SyntaxError: Duplicate parameter name not allowed in this context
-```
+    // 报错
+    function foo(x, x, y = 1) {
+      // ...
+    }
+    // SyntaxError: Duplicate parameter name not allowed in this context
+    ```
 
-与解构赋值默认值结合使用
+    与解构赋值默认值结合使用
 
-参数默认值可以与解构赋值的默认值，结合起来使用。
+    参数默认值可以与解构赋值的默认值，结合起来使用。
 
-```js
-function foo({x, y = 5}) {
-  console.log(x, y);
-}
+    ```js
+    function foo({x, y = 5}) {
+      console.log(x, y);
+    }
 
-foo({}) // undefined 5
-foo({x: 1}) // 1 5
-foo({x: 1, y: 2}) // 1 2
-foo() // TypeError: Cannot read property 'x' of undefined
-```
+    foo({}) // undefined 5
+    foo({x: 1}) // 1 5
+    foo({x: 1, y: 2}) // 1 2
+    foo() // TypeError: Cannot read property 'x' of undefined
+    ```
 
-参数默认值的位置
+    参数默认值的位置
 
-通常情况下，定义了默认值的参数，应该是函数的尾参数。因为这样比较容易看出来，到底省略了哪些参数。如果非尾部的参数设置默认值，实际上这个参数是没法省略的。
+    通常情况下，定义了默认值的参数，应该是函数的尾参数。因为这样比较容易看出来，到底省略了哪些参数。如果非尾部的参数设置默认值，实际上这个参数是没法省略的。
 
-```js
-// 例一
-function f(x = 1, y) {
-  return [x, y];
-}
+    ```js
+    // 例一
+    function f(x = 1, y) {
+      return [x, y];
+    }
 
-f() // [1, undefined]
-f(2) // [2, undefined])
-f(, 1) // 报错
-f(undefined, 1) // [1, 1]
+    f() // [1, undefined]
+    f(2) // [2, undefined])
+    f(, 1) // 报错
+    f(undefined, 1) // [1, 1]
 
-// 例二
-function f(x, y = 5, z) {
-  return [x, y, z];
-}
+    // 例二
+    function f(x, y = 5, z) {
+      return [x, y, z];
+    }
 
-f() // [undefined, 5, undefined]
-f(1) // [1, 5, undefined]
-f(1, ,2) // 报错
-f(1, undefined, 2) // [1, 5, 2]
-```
+    f() // [undefined, 5, undefined]
+    f(1) // [1, 5, undefined]
+    f(1, ,2) // 报错
+    f(1, undefined, 2) // [1, 5, 2]
+    ```
 
-如果传入undefined，将触发该参数等于默认值，null则没有这个效果。
+    如果传入undefined，将触发该参数等于默认值，null则没有这个效果。
 
-```js
-function foo(x = 5, y = 6) {
-  console.log(x, y);
-}
+    ```js
+    function foo(x = 5, y = 6) {
+      console.log(x, y);
+    }
 
-foo(undefined, null)
-// 5 null
+    foo(undefined, null)
+    // 5 null
 
-```
+    ```
 
 4. 传递方式
 
-函数参数如果是原始类型的值（数值、字符串、布尔值），传递方式是传值传递（passes by value）。这意味着，在函数体内修改参数值，不会影响到函数外部。
+    函数参数如果是原始类型的值（数值、字符串、布尔值），传递方式是传值传递（passes by value）。这意味着，在函数体内修改参数值，不会影响到函数外部。
 
-```js
-var p = 2;
+    ```js
+    var p = 2;
 
-function f(p) {
-  p = 3;
-}
-f(p);
+    function f(p) {
+      p = 3;
+    }
+    f(p);
 
-p // 2
-```
+    p // 2
+    ```
 
-上面代码中，变量p是一个原始类型的值，传入函数f的方式是传值传递。因此，在函数内部，p的值是原始值的拷贝，无论怎么修改，都不会影响到原始值。
+    上面代码中，变量p是一个原始类型的值，传入函数f的方式是传值传递。因此，在函数内部，p的值是原始值的拷贝，无论怎么修改，都不会影响到原始值。
 
-但是，如果函数参数是复合类型的值（数组、对象、其他函数），传递方式是传址传递（pass by reference）。也就是说，传入函数的原始值的地址，因此在函数内部修改参数，将会影响到原始值。
+    但是，如果函数参数是复合类型的值（数组、对象、其他函数），传递方式是传址传递（pass by reference）。也就是说，传入函数的原始值的地址，因此在函数内部修改参数，将会影响到原始值。
 
-```js
-var obj = {p: 1};
+    ```js
+    var obj = {p: 1};
 
-function f(o) {
-  o.p = 2;
-}
-f(obj);
+    function f(o) {
+      o.p = 2;
+    }
+    f(obj);
 
-obj.p // 2
-```
+    obj.p // 2
+    ```
 
-上面代码中，传入函数f的是参数对象obj的地址。因此，在函数内部修改obj的属性p，会影响到原始值。
+    上面代码中，传入函数f的是参数对象obj的地址。因此，在函数内部修改obj的属性p，会影响到原始值。
 
-注意，如果函数内部修改的，不是参数对象的某个属性，而是替换掉整个参数，这时不会影响到原始值。
+    注意，如果函数内部修改的，不是参数对象的某个属性，而是替换掉整个参数，这时不会影响到原始值。
 
-```js
-var obj = [1, 2, 3];
+    ```js
+    var obj = [1, 2, 3];
 
-function f(o){
-  o = [2, 3, 4];
-}
-f(obj);
+    function f(o){
+      o = [2, 3, 4];
+    }
+    f(obj);
 
-obj // [1, 2, 3]
-```
+    obj // [1, 2, 3]
+    ```
 
-上面代码中，在函数f内部，参数对象obj被整个替换成另一个值。这时不会影响到原始值。这是因为，形式参数（o）与实际参数obj存在一个赋值关系。
+    上面代码中，在函数f内部，参数对象obj被整个替换成另一个值。这时不会影响到原始值。这是因为，形式参数（o）与实际参数obj存在一个赋值关系。
 
-```js
-// 函数f内部
-o = obj;
-```
+    ```js
+    // 函数f内部
+    o = obj;
+    ```
 
-上面代码中，对o的修改都会反映在obj身上。但是，如果对o赋予一个新的值，就等于切断了o与obj的联系，导致此后的修改都不会影响到obj了。
+    上面代码中，对o的修改都会反映在obj身上。但是，如果对o赋予一个新的值，就等于切断了o与obj的联系，导致此后的修改都不会影响到obj了。
 
-某些情况下，如果需要对某个原始类型的变量，获取传址传递的效果，可以将它写成全局对象的属性。
+    某些情况下，如果需要对某个原始类型的变量，获取传址传递的效果，可以将它写成全局对象的属性。
 
-```js
-var a = 1;
+    ```js
+    var a = 1;
 
-function f(p) {
-  window[p] = 2;
-}
-f('a');
+    function f(p) {
+      window[p] = 2;
+    }
+    f('a');
 
-a // 2
-```
+    a // 2
+    ```
 
-上面代码中，变量a本来是传值传递，但是写成window对象的属性，就达到了传址传递的效果。
+    上面代码中，变量a本来是传值传递，但是写成window对象的属性，就达到了传址传递的效果。
 
 5. 同名参数
 
-如果有同名的参数，则取最后出现的那个值。
+    如果有同名的参数，则取最后出现的那个值。
 
-```js
-function f(a, a) {
-  console.log(a);
-}
+    ```js
+    function f(a, a) {
+      console.log(a);
+    }
 
-f(1, 2) // 2
-```
+    f(1, 2) // 2
+    ```
 
-上面的函数f有两个参数，且参数名都是a。取值的时候，以后面的a为准。即使后面的a没有值或被省略，也是以其为准。
+    上面的函数f有两个参数，且参数名都是a。取值的时候，以后面的a为准。即使后面的a没有值或被省略，也是以其为准。
 
-```js
-function f(a, a){
-  console.log(a);
-}
+    ```js
+    function f(a, a){
+      console.log(a);
+    }
 
-f(1) // undefined
-```
+    f(1) // undefined
+    ```
 
-调用函数f的时候，没有提供第二个参数，a的取值就变成了undefined。这时，如果要获得第一个a的值，可以使用arguments对象。
+    调用函数f的时候，没有提供第二个参数，a的取值就变成了undefined。这时，如果要获得第一个a的值，可以使用arguments对象。
 
-```js
-function f(a, a) {
-  console.log(arguments[0]);
-}
+    ```js
+    function f(a, a) {
+      console.log(arguments[0]);
+    }
 
-f(1) // 1
-```
+    f(1) // 1
+    ```
 
 6. arguments对象
 
-- 定义
+    - 定义
 
-由于 JavaScript 允许函数有不定数目的参数，所以需要一种机制，可以在函数体内部读取所有参数。这就是arguments对象的由来。
+        由于 JavaScript 允许函数有不定数目的参数，所以需要一种机制，可以在函数体内部读取所有参数。这就是arguments对象的由来。
 
-arguments对象包含了函数运行时的所有参数，arguments[0]就是第一个参数，arguments[1]就是第二个参数，以此类推。这个对象只有在函数体内部，才可以使用。
+        arguments对象包含了函数运行时的所有参数，arguments[0]就是第一个参数，arguments[1]就是第二个参数，以此类推。这个对象只有在函数体内部，才可以使用。
 
-```js
-var f = function (one) {
-  console.log(arguments[0]);
-  console.log(arguments[1]);
-  console.log(arguments[2]);
-}
+        ```js
+        var f = function (one) {
+          console.log(arguments[0]);
+          console.log(arguments[1]);
+          console.log(arguments[2]);
+        }
 
-f(1, 2, 3)
-// 1
-// 2
-// 3
-```
+        f(1, 2, 3)
+        // 1
+        // 2
+        // 3
+        ```
 
-正常模式下，arguments对象可以在运行时修改。
+        正常模式下，arguments对象可以在运行时修改。
 
-```js
-var f = function(a, b) {
-  arguments[0] = 3;
-  arguments[1] = 2;
-  return a + b;
-}
+        ```js
+        var f = function(a, b) {
+          arguments[0] = 3;
+          arguments[1] = 2;
+          return a + b;
+        }
 
-f(1, 1) // 5
-```
+        f(1, 1) // 5
+        ```
 
-上面代码中，函数f调用时传入的参数，在函数内部被修改成3和2。
+        上面代码中，函数f调用时传入的参数，在函数内部被修改成3和2。
 
-严格模式下，arguments对象是一个只读对象，修改它是无效的，但不会报错。
+        严格模式下，arguments对象是一个只读对象，修改它是无效的，但不会报错。
 
-```js
-var f = function(a, b) {
-  'use strict';
-  arguments[0] = 3; // 无效
-  arguments[1] = 2; // 无效
-  return a + b;
-}
+        ```js
+        var f = function(a, b) {
+          'use strict';
+          arguments[0] = 3; // 无效
+          arguments[1] = 2; // 无效
+          return a + b;
+        }
 
-f(1, 1) // 2
-```
+        f(1, 1) // 2
+        ```
 
-上面代码中，函数体内是严格模式，这时修改arguments对象就是无效的。
+        上面代码中，函数体内是严格模式，这时修改arguments对象就是无效的。
 
-可以通过arguments对象的length属性，判断函数调用时到底带几个参数。
+        可以通过arguments对象的length属性，判断函数调用时到底带几个参数。
 
-```js
-function f() {
-  return arguments.length;
-}
+        ```js
+        function f() {
+          return arguments.length;
+        }
 
-f(1, 2, 3) // 3
-f(1) // 1
-f() // 0
-```
+        f(1, 2, 3) // 3
+        f(1) // 1
+        f() // 0
+        ```
 
-- 与数组的关系
+    - 与数组的关系
 
-需要注意的是，虽然arguments很像数组，但它是一个对象。数组专有的方法（比如slice和forEach），不能在arguments对象上直接使用。
+        需要注意的是，虽然arguments很像数组，但它是一个对象。数组专有的方法（比如slice和forEach），不能在arguments对象上直接使用。
 
-但是，可以通过apply方法，把arguments作为参数传进去，这样就可以让arguments使用数组方法了。
+        但是，可以通过apply方法，把arguments作为参数传进去，这样就可以让arguments使用数组方法了。
 
-```js
-// 用于apply方法
-myfunction.apply(obj, arguments).
+        ```js
+        // 用于apply方法
+        myfunction.apply(obj, arguments).
 
-// 使用与另一个数组合并
-Array.prototype.concat.apply([1,2,3], arguments)
-```
+        // 使用与另一个数组合并
+        Array.prototype.concat.apply([1,2,3], arguments)
+        ```
 
-要让arguments对象使用数组方法，真正的解决方法是将arguments转为真正的数组。下面是两种常用的转换方法：slice方法和逐一填入新数组。
+        要让arguments对象使用数组方法，真正的解决方法是将arguments转为真正的数组。下面是两种常用的转换方法：slice方法和逐一填入新数组。
 
-```js
-var args = Array.prototype.slice.call(arguments);
+        ```js
+        var args = Array.prototype.slice.call(arguments);
 
-// or
+        // or
 
-var args = [];
-for (var i = 0; i < arguments.length; i++) {
-  args.push(arguments[i]);
-}
-```
+        var args = [];
+        for (var i = 0; i < arguments.length; i++) {
+          args.push(arguments[i]);
+        }
+        ```
 
-- callee属性
+    - callee属性
 
-arguments对象带有一个callee属性，返回它所对应的原函数
+        arguments对象带有一个callee属性，返回它所对应的原函数
 
-```js
-var f = function(one) {
-  console.log(arguments.callee === f);
-}
+        ```js
+        var f = function(one) {
+          console.log(arguments.callee === f);
+        }
 
-f() // true
-```
+        f() // true
+        ```
 
-可以通过arguments.callee，达到调用函数自身的目的。这个属性在严格模式里面是禁用的，因此不建议使用。
+        可以通过arguments.callee，达到调用函数自身的目的。这个属性在严格模式里面是禁用的，因此不建议使用。
 
 ### 函数的其他知识点
 
