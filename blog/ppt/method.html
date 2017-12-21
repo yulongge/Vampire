@@ -100,17 +100,17 @@ img {
 	<body>
 		<textarea id="source">
 
-		## 函数
+		## 函数(function)
 
-		函数就是一段可以反复调用的代码块。函数还能接受输入的参数，不同的参数会返回不同的值。
+		函数就是一段可以反复调用的代码块。函数还能接受输入的参数，可以根据不同的参数会返回不同的值。
 
 		---
 
 		### 声明
 
-		#### function命令
+		#### **function** 命令
 
-		`function`命令声明的代码区块，就是一个函数。`function`命令后面是函数名，函数名后面是一对圆括号，里面是传入函数的参数。函数体放在大括号里面。
+		`function` 命令声明的代码区块，就是一个函数。`function`命令后面是函数名，函数名后面是一对圆括号，里面是传入函数的参数。函数体放在大括号里面。
 
 		```js
 		function print(web) {
@@ -124,17 +124,17 @@ img {
 
 		#### 函数表达式
 
-		除了用`function`命令声明函数，还可以采用变量赋值的写法。
+		除了用`function` 命令声明函数，还可以采用变量赋值的写法。
 
 		```js
 		var print = function(web) {
 			console.log(web, 'print');
-		}
+		};
 		```
 
 		这种写法将一个匿名函数赋值给变量。这时，这个匿名函数又称函数表达式（Function Expression），因为赋值语句的等号右侧只能放表达式。
 
-		采用函数表达式声明函数时，function命令后面不带有函数名。如果加上函数名，该函数名只在函数体内部有效，在函数体外部无效。
+		采用函数表达式声明函数时，`function` 命令后面不带有函数名。如果加上函数名，该函数名只在函数体内部有效，在函数体外部无效。
 
 		```js
 		var print = function x(){
@@ -161,7 +161,7 @@ img {
 
 		---
 
-		#### Function构造函数
+		#### Function 构造函数
 
 		```js
 		var add = new Function(
@@ -177,11 +177,11 @@ img {
 		}
 		```
 
-		在上面代码中，`Function` 构造函数接受三个参数，除了最后一个参数是add函数的“函数体”，其他参数都是add函数的参数。
+		在上面代码中，`Function` 构造函数接受三个参数，除了最后一个参数是 `add` 函数的 ** 函数体 **，其他参数都是 `add` 函数的 ** 参数 **。
 
 		---
 
-		你可以传递任意数量的参数给Function构造函数，只有最后一个参数会被当做函数体，如果只有一个参数，该参数就是函数体。
+		你可以传递任意数量的参数给 `Function` 构造函数，只有最后一个参数会被当做函数体，如果只有一个参数，该参数就是函数体。
 
 		```js
 		var foo = new Function(
@@ -230,14 +230,17 @@ img {
 		上面四点中，第一点尤其值得注意。this对象的指向是可变的，但是在箭头函数中，它是固定的。
 
 		```js
+		var a = 1;
+		var b = () => a;
+		b();
+		b.call({a: 2});
+
 		function foo() {
 			setTimeout(() => {
 				console.log('id:', this.id);
 			}, 100);
 		}
-
 		var id = 21;
-
 		foo.call({ id: 42 });
 		// id: 42
 		```
@@ -247,7 +250,7 @@ img {
 
 		#### name属性
 
-		name属性返回紧跟在function关键字之后的那个函数名。
+		`name` 属性返回紧跟在 `function` 关键字之后的那个函数名。
 
 		```js
 		function f1() {}
@@ -280,7 +283,7 @@ img {
 
 		#### length 属性
 
-		length属性返回函数预期传入的参数个数，即函数定义之中的参数个数。
+		`length` 属性返回函数预期传入的参数个数，即函数定义之中的参数个数。
 
 		```js
 		function f(a, b) {}
@@ -289,7 +292,7 @@ img {
 
 		上面代码定义了空函数f，它的length属性就是定义时的参数个数。不管调用时输入了多少个参数，length属性始终等于2。
 
-		length属性提供了一种机制，判断定义时和调用时参数的差异，以便实现面向对象编程的”方法重载“（overload）。
+		length属性提供了一种机制，判断定义时和调用时参数的差异，以便实现面向对象编程的 ** 方法重载 ** （overload）。
 
 		---
 
@@ -394,7 +397,7 @@ img {
 		在函数内部定义的变量，外部无法读取，称为“局部变量”（local variable）。
 
 		```js
-			function f(){
+		function f(){
 			var v = 1;
 		}
 
@@ -779,18 +782,6 @@ img {
 
 		需要注意的是，虽然arguments很像数组，但它是一个对象。数组专有的方法（比如slice和forEach），不能在arguments对象上直接使用。
 
-		但是，可以通过apply方法，把arguments作为参数传进去，这样就可以让arguments使用数组方法了。
-
-		```js
-		// 用于apply方法
-		myfunction.apply(obj, arguments).
-
-		// 使用与另一个数组合并
-		Array.prototype.concat.apply([1,2,3], arguments)
-		```
-
-		要让arguments对象使用数组方法，真正的解决方法是将arguments转为真正的数组。下面是两种常用的转换方法：slice方法和逐一填入新数组。
-
 		```js
 		var args = Array.prototype.slice.call(arguments);
 
@@ -1127,6 +1118,18 @@ img {
 			storeData(tmp);
 		}());
 		```
+
+		---
+
+		### 衍生
+
+		- 变量(var, let, const)
+		- 闭包(作用域)
+		- 对象的copy(浅copy, 深copy)
+
+		---
+		
+		## Q & A
 
 
 
