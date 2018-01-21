@@ -28,5 +28,48 @@ NPM 是随同Nodejs 一起安装的包管理工具,能解决Nodejsd代码部署�
 
 ### npm 常用命令
 
-### npm镜像(淘宝)
+### npm 镜像(淘宝)
 
+### package.json
+
+### 版本控制
+
+## REPL
+
+Node REPL(Read Eval Print Loop:交互式解释器)
+
+可以执行一下任务:
+
+- 读取
+- 执行
+- 打印
+- 循环
+
+## 管理node版本
+
+大量开发者的贡献使Node版本的迭代速度很快，版本很多，所以升级Node版本就成为了一个问题。目前有n和nvm这两个工具可以对Node进行无痛升级，本文简单介绍一下二者的使用
+
+### n
+
+n是Node的一个模块，作者是TJ Holowaychuk（鼎鼎大名的Express框架作者），就像它的名字一样，它的理念就是简单
+
+> `no subshells, no profile setup, no convoluted api, just simple`
+
+```js
+npm install -g n
+
+//npm ERR! notsup Unsupported platform for n@2.1.8: wanted {“os”:”!win32”,”arch”:” any”} (current: {“os”:”win32”,”arch”:”x64”}) 
+
+npm install -g n --force
+
+```
+
+#### 命令
+
+### nvm
+
+nvm全称Node Version Manager，它与n的实现方式不同，其是通过shell脚本实现的
+
+nvm 不支持windows
+
+nvm-windows 适用于windows
