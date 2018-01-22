@@ -66,10 +66,110 @@ npm install -g n --force
 
 #### 命令
 
+```js
+//查看已安装的版本
+n
+
+//查看最新版本
+n --latest
+
+// 安装最新的版本并使用
+n latest (-d) // -d表示仅下载不使用
+
+//查看最稳定的版本
+n --stable
+
+//安装最新稳定的版本并使用
+n stable
+
+//安装某个版本并使用
+n <version> //n 6.2.2
+
+//删除某些版本
+n rm <version>
+
+//查看可用版本
+n ls
+
+//查看帮助信息
+n -h
+
+//以制定的版本来执行脚本
+n use <version> some.js
+```
+
 ### nvm
 
-nvm全称Node Version Manager，它与n的实现方式不同，其是通过shell脚本实现的
+> 既然有这么简单好用的n，那么nvm为什么还会大肆流行呢？
+
+nvm全称Node Version Manager，不同于 n，nvm 不是一个 npm package，而是一个独立软件包. 它与n的实现方式不同，其是通过shell脚本实现的.
+
+安装方式:
+
+```js
+//curl
+curl https://raw.github.com/creationix/nvm/v0.4.0/install.sh | sh
+
+//wget
+wget -qO- https://raw.github.com/creationix/nvm/v0.4.0/install.sh | sh
+```
+
+以上脚本会把 `nvm` 库clone到 `~/.nvm`，然后会在 `~/.bash_profile`, `~/.zshrc`或`~/.profile` 末尾添加`source`，安装完成之后，你可以用以下命令来安装`node`
 
 nvm 不支持windows
 
-nvm-windows 适用于windows
+[nvm-windows](https://github.com/coreybutler/nvm-windows) 适用于windows
+
+### 常用命令
+
+```js
+//安装指定的版本
+nvm install 0.10
+
+//使用指定的版本
+nvm use 0.10
+
+//查看当前已经安装的版本
+nvm ls
+
+//查看正在使用的版本
+nvm current
+
+//以指定版本执行脚本
+nvm run 0.10.24 some.js
+
+//卸载nvm
+rm -rf ~/.nvm
+
+```
+
+### `n` vs `nvm`
+
+- 安装简易度
+nvm 安装起来显然是要麻烦不少；n 这种安装方式更符合 node 的惯性思维
+
+- 依赖
+我们在使用 n 管理 node 版本前，首先需要一个 node 环境。我们或者用 Homebrew 来安装一个 node，或者从官网下载 pkg 来安装，总之我们得先自己装一个 node —— n 本身是没法给你装的。
+然后我们可以使用 n 来安装不同版本的 node。
+在安装的时候，n 会先将指定版本的 node 存储下来，然后将其复制到我们熟知的路径 /usr/local/bin，非常简单明了。当然由于 n 会操作到非用户目录，所以需要加 sudo 来执行命令。
+
+- 全局模块的管理
+对全局模块的管理。n 对全局模块毫无作为，因此有可能在切换了 node 版本后发生全局模块执行出错的问题；nvm 的全局模块存在于各自版本的沙箱中，切换版本后需要重新安装，不同版本间也不存在任何冲突。
+关于 node 路径。n 是万年不变的 /usr/local/bin；nvm 需要手动指定路径
+
+## 衍生
+
+- [express](http://expressjs.com/zh-cn/) 是一个简洁而灵活的 node.js Web应用框架
+
+- [koa](https://koa.bootcss.com/) 基于Node.js平台的下一代web开发框架，koa 是由 Express 原班人马打造的。
+
+## 参考
+
+- https://koa.bootcss.com/
+- http://expressjs.com/zh-cn/
+- http://www.runoob.com/nodejs/nodejs-tutorial.html
+
+## Q & A
+
+
+
