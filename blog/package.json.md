@@ -150,3 +150,8 @@ browser指定该模板供浏览器使用的版本。Browserify这样的浏览器
 ### style字段
 
 parcelify
+
+## 参考
+
+http://www.mujiang.info/translation/npmjs/files/package.json.html
+https://www.cnblogs.com/tzyy/p/5193811.html
