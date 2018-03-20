@@ -1,6 +1,6 @@
 ## Babel
 
-Bable 把最新标准编写的 JavaScript 代码向下编译成可以在今天随处可用的版本。这一过程叫 ** 源码到源码** 编译，也被称为转换编译。
+Bable 把最新标准编写的 JavaScript 代码向下编译成可以在今天随处可用的版本。这一过程叫 **源码到源码** 编译，也被称为转换编译。
 
 > 15年11月， Babel 发布了6.0版本，相对于前一代Babel5, 新一代Babel更加模块化。将所有的转码功能以插件的形式分离出去，默认只提供babel-core. 原本只需要装一个babel,现在必须按照自己的需求配置，灵活性提高的同时也提高了使用者的学习成本。
 
@@ -95,114 +95,113 @@ npm i --save-dev babel-plugin-transform-es2015-arrow-functions
 ```
 如果我们一个个引入功能单一的插件的话显得特别麻烦，通常我们用的更多的是预设，插件和预设通常写入到配置文件中，可以将配置写入package.json的`babel`属性里，或者是一个单独的.babelrc文件。
 
-- `.babelrc`
+`.babelrc`
 
-	在我们告诉Babel该做什么之前，你需要做的就是在项目的根路径下创建.babelrc文件，然后输入一下内容作为开始:
+在我们告诉Babel该做什么之前，你需要做的就是在项目的根路径下创建.babelrc文件，然后输入一下内容作为开始:
 
-	```json
-		{
-			"presets": [],
-			"plugins": []
-		}
-	```
+```json
+{
+	"presets": [],
+	"plugins": []
+}
+```
 
-	这个文件就是用来让Babel做你要它做的事情的配置文件。
+这个文件就是用来让Babel做你要它做的事情的配置文件。
 
 
-- babel-preset-es2015
+`babel-preset-es2015`
 
-	预设babel-preset 系列打包了一组插件，类似于餐厅的套餐，例如`babel-preset-es2015`打包了es6的特性，`babel-preset-stage-0`打包处于strawman阶段的语法。
+预设babel-preset 系列打包了一组插件，类似于餐厅的套餐，例如`babel-preset-es2015`打包了es6的特性，`babel-preset-stage-0`打包处于strawman阶段的语法。
 
-	> strawman 稻草人语法
-	
-	我们需要安装`es2015`Babel预设：
+> strawman 稻草人语法
 
-	```shell
-		npm i --save-dev babel-preset-es2015
-	```
+我们需要安装`es2015`Babel预设：
 
-	```json
-	{
-		"presets": [
-			"es2015"
-		],
-		"plugins": []
-	}
-	```
-	同样的还有`babel-preset-2016`, `babel-preset-2017`
+```shell
+npm i --save-dev babel-preset-es2015
+```
 
-- babel-preset-latest
-
-	latest 是一个特殊的presets,包括了es2015, es2016, es2017的插件(以后的es2018也会包括进去), 即总是包含最新的编译插件。
-
-- babel-preset-env
-
-	上面提高的各种preset的问题就是: 它们都太重了， 即包含了过多在某些情况下不需要的功能，比如，现代的浏览器大多支持es6的generator,但是如果你使用babel-preset-es2015，它会将generator函数编译为复杂的es5代码，这是没必要的，但使用babel-preset-env,我们可以声明环境，然后该preset就会只编译包含我们所声明环境缺少的特性代码，因此也是比较推荐的方式。
-
-	```shell
-	npm i babel-preset-env --save-dev
-	```
-
-	```json
-	{
-		"presets": ["env"]
-	}
-	```
-
-	当没有添加任何配置选项时， babel-preset-env默认行为是和babel-preset-latest是一样的。
-	
-	看它如何使用：
-
-	```js
-	//指定支持主浏览器最新的两个版本及IE7+
+```json
+{
 	"presets": [
-		[
-			"env", 
-			{
-				"targets": {
-					"browsers": ["last 2 versions", "ie >= 7"]
-				}
+		"es2015"
+	],
+	"plugins": []
+}
+```
+同样的还有`babel-preset-2016`, `babel-preset-2017`
+
+`babel-preset-latest`
+
+latest 是一个特殊的presets,包括了es2015, es2016, es2017的插件(以后的es2018也会包括进去), 即总是包含最新的编译插件。
+
+`babel-preset-env`
+
+上面提高的各种preset的问题就是: 它们都太重了， 即包含了过多在某些情况下不需要的功能，比如，现代的浏览器大多支持es6的generator,但是如果你使用babel-preset-es2015，它会将generator函数编译为复杂的es5代码，这是没必要的，但使用babel-preset-env,我们可以声明环境，然后该preset就会只编译包含我们所声明环境缺少的特性代码，因此也是比较推荐的方式。
+
+```shell
+npm i babel-preset-env --save-dev
+```
+
+```json
+{
+	"presets": ["env"]
+}
+```
+
+当没有添加任何配置选项时， babel-preset-env默认行为是和babel-preset-latest是一样的。
+
+看它如何使用：
+
+```js
+//指定支持主浏览器最新的两个版本及IE7+
+"presets": [
+	[
+		"env", 
+		{
+			"targets": {
+				"browsers": ["last 2 versions", "ie >= 7"]
 			}
-		]
+		}
 	]
+]
 
-	//支持超过市场份额5%的浏览器
-	"targets": {
-		"browsers": "> 5%"
-	}
+//支持超过市场份额5%的浏览器
+"targets": {
+	"browsers": "> 5%"
+}
 
-	//某个固定版本的浏览器
-	"target": {
-		"chrome": 56
-	}
-	```
+//某个固定版本的浏览器
+"target": {
+	"chrome": 56
+}
+```
 
-	更多的配置: [文档](http://babeljs.io/docs/plugins/preset-env/)
+更多的配置: [文档](http://babeljs.io/docs/plugins/preset-env/)
 
-- babel-preset-stage-x
+`babel-preset-stage-x`
 
-	> 官方预设(preset), 有两种，一个是按年份(babel-preset-2017)，一个是按阶段(babel-preset-stage-0)。 这主要是根据TC39 委员会ECMASCRPIT 发布流程来制定的。TC39 委员会决定，从2016年开始，每年都会发布一个版本，它包括每年期限内完成的所有功能，同时ECMAScript的版本号也按年份编制，就有了ES2016, ES2017。所以也就有了babel-present-2016, babel-preset-2017， 对每一年新增的语法进行转化。babel-preset-latest 就是把所有es2015, es2016, es2017 全部包含在一起了
+> 官方预设(preset), 有两种，一个是按年份(babel-preset-2017)，一个是按阶段(babel-preset-stage-0)。 这主要是根据TC39 委员会ECMASCRPIT 发布流程来制定的。TC39 委员会决定，从2016年开始，每年都会发布一个版本，它包括每年期限内完成的所有功能，同时ECMAScript的版本号也按年份编制，就有了ES2016, ES2017。所以也就有了babel-present-2016, babel-preset-2017， 对每一年新增的语法进行转化。babel-preset-latest 就是把所有es2015, es2016, es2017 全部包含在一起了
 
-	最终在阶段4被标准正式采纳。
+最终在阶段4被标准正式采纳。
 
-	以下是四个不同阶段的(打包的)预设:
+以下是四个不同阶段的(打包的)预设:
 
-	- babel-preset-stage-0
-	- babel-preset-stage-1
-	- babel-preset-stage-2
-	- babel-preset-stage-3
+- babel-preset-stage-0
+- babel-preset-stage-1
+- babel-preset-stage-2
+- babel-preset-stage-3
 
-	> stage-4预设是不存在的，因为它就是上面的es2017预设。
-	
-	以上每个预设都依赖于紧随的后期阶段预设，数字越小，阶段越靠后，存在依赖关系，也就是说stage-0 是包括stage-1的，以此类推，也就是说这些stage包含的特性比latest更新的特性还要靠后但还未被写入标准进行发布。
-	使用是时候只需要安装你想要的阶段就可以了。
+> stage-4预设是不存在的，因为它就是上面的es2017预设。
 
-	```shell
-	npm i --save-dev babel-preset-stage-2
-	```
+以上每个预设都依赖于紧随的后期阶段预设，数字越小，阶段越靠后，存在依赖关系，也就是说stage-0 是包括stage-1的，以此类推，也就是说这些stage包含的特性比latest更新的特性还要靠后但还未被写入标准进行发布。
+使用是时候只需要安装你想要的阶段就可以了。
 
-	然后添加进你的`.babelrc`配置文件，但是要注意如果没有提供es2017相关的预设，preset-stage-x这种阶段性的预设也不能用。
+```shell
+npm i --save-dev babel-preset-stage-2
+```
 
+然后添加进你的`.babelrc`配置文件，但是要注意如果没有提供es2017相关的预设，preset-stage-x这种阶段性的预设也不能用。
 
 
 ### Babel执行，生成代码
@@ -221,7 +220,7 @@ const Promise = require('babel-runtime/core-js/promise') //就可以引入Promis
 
 但是babel-runtime 也有问题，第一，很不方便， 第二，在代码中直接引入helper函数，以为着不能共享，造成最终打包出来的文件里有很多重复的helper代码，所以babel又开发了babel-plugin-transform-runtime，这个模块将我们的代码重写，如将Promise 重写冲_Promise，然后引入_Promise helper函数，这样就避免了重复打包代码和手动引入模块的痛苦。
 
-- babel-polyfill
+`babel-polyfill`
 
 polyfill就是在当前运行环境中用来复制(模拟性的复制，而不是拷贝)尚不存在的原生api的代码，能让你提前使用还不可用的apis。
 
@@ -236,5 +235,84 @@ npm i --save-dev babel-polyfill
 然后只需要在文件顶部导入polyfill就可以了
 
 ```js
-import 
+import "babel-polyfill"; 
 ```
+
+`babel-runtime`
+
+像是分散的polyfill模块，我们可以在自己的模块里单独引入，比如`require('babel-runtime/core-js/promise')`，它们不会在全局环境添加未实现的方法，只是，这样手动引用polyfill会非常低效，我们借助runtime transform 插件自动化处理这一切。
+
+```js
+npm i --save-dev babel-plugin-transform-runtime
+npm i --save-dev babel-runtime
+```
+
+然后更新.babelrc
+
+```json
+{
+	"plugins": [
+		"transfrom-runtime",
+		"transform-es2015-classes"
+	]
+}
+```
+
+现在，Babel会把这样的代码:
+
+```js
+class Foo {
+	method() {}
+}
+```
+
+编译为：
+
+```js
+import _classCallCheck from "babel-runtime/helpers/classCallCheck";
+import _createClass from "babel-runtime/helpers/createClass";
+
+let Foo = function () {
+  function Foo() {
+    _classCallCheck(this, Foo);
+  }
+
+  _createClass(Foo, [{
+    key: "method",
+    value: function method() {}
+  }]);
+
+  return Foo;
+}();
+```
+这样就不需要吧`_classCallCheck` 和 `_createClass` 这两个助手方法放进每一个需要文件里去了。
+
+`So.....`
+
+如果你不介意污染全局变量，放心大胆地用`babel-polyfill`;而如果你在写模块，为了避免污染使用者的环境，没得选，只能用 babel-runtime + babel-plugin-transform-runtime.
+
+`options`
+
+很多预设和插件都有选项用于配置他们自身的行为，例如，很多转换器都有** 宽松 ** 模式，通过放弃一些标准中的行为来生成更简化切性能更好的代码。
+
+```json 
+{
+	"plugins": [
+		"transform-runtime",
+		"transform-es2015-classes",
+		["transform-es2015-classes", {"loose": true}]
+	]
+}
+```
+
+`plugins/presets`排序
+
+- 具体而言, plugins 优先于presets进行编译。
+- plugins 按照数组的index增序(从数组第一个到最后一个)进行编译
+- presets 按照数组的index倒序(从数组最后一个到第一个)进行编译，因为作者认为大部分会把presets写成["es2015", "stage-0"].
+
+
+
+
+
+
