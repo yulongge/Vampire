@@ -10,7 +10,9 @@ Immutable数据就是一旦创建，就不能更改的数据。每当对Immutabl
 
 ###### Mutable
 
-JavaScript在创建变数、赋值后是可变的(mutable)，因为使用了引用赋值，新的对象简单的引用了原始对象，改变新的对象将影响到原始对象。
+JavaScript 中的对象一般是可变的（Mutable），因为使用了引用赋值，新的对象简单的引用了原始对象，改变新的对象将影响到原始对象
+
+> 除了基本的类型之外
 
 ```js
 var obj = {
@@ -26,7 +28,7 @@ obj.a //999
 
 改变了obj1.a的值，同时也会更改到obj.a的值。这样共享的好处就是节省记忆体，坏处就是稍不注意会导致「改A坏B 」的棘手问题.
 
-一般的解法就是使用「深拷贝」(deep copy)而非浅拷贝(shallow copy)，让共享变成个别拥有自己的资料来源，缺点就是浪费记忆体,造成了 CPU 和内存的浪费.
+一般的解法就是使用「深拷贝」(deep copy)而非浅拷贝(shallow copy)，来避免被修改,但是这样造成了 CPU和内存的浪费.
 
 ##### Immutable 可以很好地解决这些问题
 
@@ -93,18 +95,68 @@ Object.is(map1, map2) // false
 is(map1, map2) // true
 ```
 
-`4. List 和 Map`
+`4. List`
 
-`作用` : 用来创建一个新的List/Map对象
-`用法` : `fromJS(value, converter)`
-`简介` : value是要转变的数据，converter是要做的操作。第二个参数可不填，默认情况会将数组准换为List类型，将对象转换为Map类型，其余不做操作。
+`作用` : 用来创建一个新的List
+`用法` : 
 
 ```js
-const obj = Immutable.fromJS({a:'123',b:'234'},function (key, value, path) {
-    console.log(key, value, path)
-    return isIndexed(value) ? value.toList() : value.toOrderedMap())
-})
+List<T>(): List<T>
+List<T>(iter: Iterable.Indexed<T>): List<T>
+List<T>(iter: Iterable.Set<T>): List<T>
+List<K, V>(iter: Iterable.Keyed<K, V>): List<any>
+List<T>(array: Array<T>): List<T>
+List<T>(iterator: Iterator<T>): List<T>
+List<T>(iterable: Object): List<T>
 ```
+
+`简介` : List() 是一个构造方法，可以用于创建新的 List 数据类型，上面代码演示了该构造方法接收的参数类型，此外 List 拥有两个静态方法：
+
+- List.isList(value)，判断 value 是否是 List 类型
+- List.of(...values)，创建包含 ...values 的列表
+
+```js
+// 1. 查看 List 长度
+const $arr1 = List([1, 2, 3]);
+$arr1.size
+// => 3
+
+// 2. 添加或替换 List 实例中的元素
+// set(index: number, value: T)
+// 将 index 位置的元素替换为 value，即使索引越界也是安全的
+const $arr2 = $arr1.set(-1, 0);
+// => [1, 2, 0]
+const $arr3 = $arr1.set(4, 0);
+// => [ 1, 2, 3, undefined, 0 ]
+
+// 3. 删除 List 实例中的元素
+// delete(index: number)
+// 删除 index 位置的元素
+const $arr4 = $arr1.delete(1);
+// => [ 1, 3 ]
+
+// 4. 向 List 插入元素
+// insert(index: number, value: T)
+// 向 index 位置插入 value
+const $arr5 = $arr1.insert(1, 1.5);
+// => [ 1, 1.5, 2, 3 ]
+
+// 5. 清空 List
+// clear()
+const $arr6 = $arr1.clear();
+// => []
+```
+
+`5. Map`
+
+`作用` : Map 可以使用任何类型的数据作为 Key 值，并使用 Immutable.is() 方法来比较两个 Key 值是否相等
+`用法` : `value.toJS()`
+`简介` : value是要转变的数据
+
+```js
+
+```
+
 
 
 
@@ -114,3 +166,4 @@ const obj = Immutable.fromJS({a:'123',b:'234'},function (key, value, path) {
 - https://segmentfault.com/a/1190000010676878
 - https://www.cnblogs.com/3body/p/6224010.html
 - https://cythilya.github.io/2017/02/12/immutability-immutablejs-seamless-immutable/
+- https://segmentfault.com/a/1190000005920644
