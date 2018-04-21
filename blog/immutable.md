@@ -30,6 +30,136 @@ obj.a //999
 
 一般的解法就是使用「深拷贝」(deep copy)而非浅拷贝(shallow copy)，来避免被修改,但是这样造成了 CPU和内存的浪费.
 
+> 对数组，对象，对象数组，进行简单的赋值运算只是创建了一份原有内容的引用，指向的任然是同一块内存区域，修改时会对应修改原内容，而有时候我们的需要独立，彼此互补影响，这就需要对他们进行深拷贝。
+
+###### 普通数组
+
+1.遍历复制
+
+```js
+var arr1 = ["a", "b"], arr2 = [];
+for (var item in arr1) arr2[item] = arr1[item];
+arr2[1] = "c";
+arr1   // => ["a", "b"]
+arr2   // => ["a", "c"]
+```
+这种方式简单粗暴，考虑到多维数组，可以用递归来实现
+
+```js
+function arrDeepCopy(source){
+    var sourceCopy = [];
+    for (var item in source) {
+        sourceCopy[item] = typeof source[item] === "object" ? arrDeepCopy(source[item]) : source[item]
+    }
+    return sourceCopy;
+}
+```
+
+2.slice()
+
+> arrayObject.slice(start, end)，方法返回一个新的数组，包含从 start 到 end （不包括该元素）的 arrayObject 中的元素。该方法并不会修改数组，而是返回一个子数组。
+
+```js
+arr2 = arr1.slice(0);
+arr2[1] = "c";
+arr1   // => ["a", "b"]
+arr2   // => ["a", "c"]
+```
+3.concat()
+
+> arrayObject.concat(arrayX,arrayX,......,arrayX), 该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。
+
+```js
+arr2 = arr1.concat();
+arr2[1] = "c";
+arr1   // => ["a", "b"]
+arr2   // => ["a", "c"]
+```
+###### 对象
+
+1.浅拷贝
+
+```js
+var obj = { "a": 1, "b": 2 };
+```
+
+```js
+var objCopy = obj;
+objCopy.b = 3;
+obj   // => { "a": 1, "b": 3 }
+objCopy   // => { "a": 1, "b": 3 }
+```
+> 同样，简单的赋值运算只是创建了一份浅拷贝
+
+2.深拷贝
+
+> 而对于对象的深拷贝，没有内置方法可以使用，我们可以自己命名一个函数进行这一操作
+
+```js
+var objDeepCopy = function(source){
+    var sourceCopy = {};
+    for (var item in source) sourceCopy[item] = typeof source[item] === 'object' ? objDeepCopy(source[item]) : source[item];
+    return sourceCopy;
+}
+var objCopy = objDeepCopy(obj);
+objCopy.a.a1[1] = "a13";
+obj   // => { "a": { "a1": ["a11", "a12"], "a2": 1 }, "b": 2 }
+objCopy   // => { "a": { "a1": ["a11", "a13"], "a2": 1 }, "b": 2 }
+```
+
+对象数组(复杂型)
+
+```js
+var objDeepCopy = function (source) {
+    var sourceCopy = source instanceof Array ? [] : {};
+    for (var item in source) {
+        sourceCopy[item] = typeof source[item] === 'object' ? objDeepCopy(source[item]) : source[item];
+    }
+    return sourceCopy;
+}
+var objCopy = objDeepCopy(obj);
+objCopy[0].a.a1[1] = "a13";
+objCopy[1][1].e = "6";
+obj   // => [{ "a": { "a1": ["a11", "a12"], "a2": 1 }, "b": 2 }, ["c", { "d": 4, "e": 5 }]]
+objCopy   // => [{ "a": { "a1": ["a11", "a13"], "a2": 1 }, "b": 2 }, ["c", { "d": 4, "e": 6 }]]
+```
+
+日常用的库函数
+
+Object.assign()
+
+> es6语法,copy可枚举的属性，也是一种浅copy
+
+```js
+  Object.assign(target, ...sources);
+```
+
+_clone
+
+> lodash方法,默认浅copy,第二个参数可以设置深浅
+
+```js
+  _clone(value, [isDeep], [customizer], [thisArg]);
+```
+
+- _cloneDeep
+
+> lodash方法，深copy
+
+```js
+  _cloneDeep(value, [customizer], [thisArg]);
+```
+
+extend
+
+> jquery方法，第一个参数可以设置是否深浅copy
+
+```js
+  jQuery.extend(true, { a : { a : "a" } }, { a : { b : "b" } } );
+  jQuery.extend( { a : { a : "a" } }, { a : { b : "b" } } );
+```
+
+
 ##### Immutable 可以很好地解决这些问题
 
 ### 什么是IMMUTABLE DATA
@@ -150,14 +280,263 @@ const $arr6 = $arr1.clear();
 `5. Map`
 
 `作用` : Map 可以使用任何类型的数据作为 Key 值，并使用 Immutable.is() 方法来比较两个 Key 值是否相等
-`用法` : `value.toJS()`
-`简介` : value是要转变的数据
+`简介` : Map() 是 Map 类型的构造方法，行为类似于 List()，用于创建新的 Map 实例，此外，还包含两个静态方法：Map.isMap() 和 Map.of()。下面介绍几个 Map 实例的常用操作
 
 ```js
+// 1. Map 实例的大小
+const $map1 = Map({ a: 1 });
+$map1.size
+// => 1
 
+// 2. 添加或替换 Map 实例中的元素
+// set(key: K, value: V)
+const $map2 = $map1.set('a', 2);
+// => Map { "a": 2 }
+
+// 3. 删除元素
+// delete(key: K)
+const $map3 = $map1.delete('a');
+// => Map {}
+
+// 4. 清空 Map 实例
+const $map4 = $map1.clear();
+// => Map {}
+
+// 5. 更新 Map 元素
+// update(updater: (value: Map<K, V>) => Map<K, V>)
+// update(key: K, updater: (value: V) => V)
+// update(key: K, notSetValue: V, updater: (value: V) => V)
+const $map5 = $map1.update('a', () => (2))
+// => Map { "a": 2 }
+
+// 6. 合并 Map 实例
+const $map6 = Map({ b: 2 });
+$map1.merge($map6);
+// => Map { "a": 1, "b": 2 }
 ```
 
+OrderedMap 是 Map 的变体，它除了具有 Map 的特性外，还具有顺序性，当开发者遍历 OrderedMap 的实例时，遍历顺序为该实例中元素的声明、添加顺序。
 
+`6. Set`
+
+Set 和 ES6 中的 Set 类似，都是没有重复值的集合，OrderedSet 是 Set 的遍历，可以保证遍历的顺序性。
+
+
+```js
+// 1. 创建 Set 实例
+const $set1 = Set([1, 2, 3]);
+// => Set { 1, 2, 3 }
+
+// 2. 添加元素
+const $set2 = $set1.add(1).add(4);
+// => Set { 1, 2, 3, 4 }
+
+// 3. 删除元素
+const $set3 = $set1.delete(3);
+// => Set { 1, 2 }
+
+// 4. 并集
+const $set4 = Set([2, 3, 4, 5, 6]);
+$set1.union($set1);
+// => Set { 1, 2, 3, 4, 5, 6 }
+
+// 5. 交集
+$set1.intersect($set4);
+// => Set { 3, 2 }
+
+// 6. 差集
+$set1.subtract($set4);
+// => Set { 1 }
+```
+
+`7. Stack`
+
+Stack 是基于 Signle-Linked List 实现的可索引集合，使用 unshift(v) 和 shift() 执行添加和删除元素的复杂度为 O(1)。
+
+```js
+// 1. 创建 Stack 实例
+const $stack1 = Stack([1, 2, 3]);
+// => Stack [ 1, 2, 3 ]
+
+// 2. 取第一个元素
+$stack1.peek()
+// => 1
+
+// 2. 取任意位置元素
+$stack1.get(2)
+// => 3
+
+// 3. 判断是否存在
+$stack1.has(10)
+// => false
+```
+
+`8. Range() 和 Repeat()`
+
+Range(start?, end?, step?) 接收三个可选参数，使用方法如下：
+
+```js
+// 1. 不传参
+Range();
+// => Range [ 0...Infinity ]
+
+// 2. 设置 start 起点
+Range(10);
+// => Range [ 10...Infinity ]
+
+// 3. 设置 start 起点和 end 终点
+Range(10, 20);
+// => Range [ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
+
+// 4. 设置 start 起点、end 终点和 step 步长
+Range(10, 20, 3);
+// => Range [ 10, 13, 16, 19 ]
+```
+
+Repeat(value, times?) 接收两个参数，其中 times 重复次数是可选参数：
+
+```js
+Repeat('foo');
+// => Repeat [ foo Infinity times ]
+
+Repeat('foo', 3);
+// => Repeat [ foo 3 times ]
+```
+
+类似 Range() 和 Repeat(value) 这样生成无限长度集合的操作，内部都存在惰性计算的机制，只有真实取值时才会生成相应的结果。使用 ES6 中的 Generator 函数，可以轻松实现一个惰性计算
+
+```js
+for (let i = 0; i < 10; i++) {
+    console.log(arr.next());
+}
+// bigArr(0): 0
+// => { value: 0, done: false }
+// => bigArr(1): 1
+// => { value: 1, done: false }
+// => bigArr(2): 2
+// => { value: 2, done: false }
+// => bigArr(3): 3
+// => { value: 3, done: false }
+// => bigArr(4): 4
+// => { value: 4, done: false }
+// => bigArr(5): 5
+// => { value: 5, done: false }
+// => bigArr(6): 6
+// => { value: 6, done: false }
+// => bigArr(7): 7
+// => { value: 7, done: false }
+// => bigArr(8): 8
+// => { value: 8, done: false }
+// => bigArr(9): 9
+// => { value: 9, done: false }
+```
+
+`9. Record`
+
+Record 在表现上类似于 ES6 中的 Class，但在某些细节上还有所不同。通过 Record() 可以创建一个新的 Record 类，使用该类可以创建具体的 Record 实例，该实例包含在 Record() 构造函数中声明的所有属性和默认值。如果 Record 实例中的某个属性被删除了，则只会讲实例中的属性值恢复为默认值：
+
+```js
+// 1. 创建 Record 实例
+const A = Record({ a: 1, b: 2 });
+const r = new A({ a: 3 });
+// => Record { "a": 3, "b": 2 }
+
+// 2. 删除实例属性
+const rr = r.remove('a');
+// => Record { "a": 1, "b": 2 }
+```
+
+此外，Record 实例还具有扩展性
+
+```js
+class ABRecord extends Record({a:1,b:2}) {
+  getAB() {
+    return this.a + this.b;
+  }
+}
+
+var myRecord = new ABRecord({b: 3})
+myRecord.getAB()
+// => 4
+```
+
+`10. Seq`
+
+Seq 有两个特点：immutable，一旦创建就不能被修改；lazy，惰性求值。在下面的代码中，虽然组合了多种遍历操作，但实际上并不会有任何的求值操作，只是纯粹的声明一个 Seq：
+
+```js
+var oddSquares = Immutable.Seq.of(1,2,3,4,5,6,7,8)
+    .filter(x => x % 2)
+    .map(x => x * x);
+```
+
+如果要从 oddSquares 中取出索引为 1 的元素，则执行过程为
+
+```js
+console.log(oddSquares.get(1));
+
+// filter(1)
+// filter(2)
+// filter(3)
+// map(3)
+// => 9
+```
+默认情况下 Seq 的惰性计算结果不会被缓存，比如在下面的代码中，由于每个 join() 都会遍历执行 map，所以 map 总共执行了六次
+
+```js
+var squares = Seq.of(1,2,3).map(x => x * x);
+squares.join() + squares.join();
+```
+
+如果开发者知道 Seq 的结果会被反复用到，那么就可以使用 cacheResult() 将惰性计算的结果保存到内存中
+
+```js
+var squares = Seq.of(1,2,3).map(x => x * x).cacheResult();
+squares.join() + squares.join();
+```
+
+`11. Iterable 和 Collection`
+
+Iterable 是键值对形式的集合，其实例可以执行遍历操作，是 immutable.js 中其他数据类型的基类，所有扩展自 Iterable 的数据类型都可以使用 Iterable 所声明的方法，比如 map 和 filter 等。
+
+Collection 是 Concrete Data Structure 的基类，使用该类时需要至少继承其子类中的一个：Collection.Keyed / Collection.Indexed / Collection.Set
+
+### React
+
+在 React 官方文档的《Advanced Performance》 一节中，专门对 React 的性能瓶颈、优化方式做了详细的解析。当一个 React 组件的 props 和 state 发生变化时，React 会根据变化后的 props 和 state 创建一个新的 virtual DOM，然后比较新旧两个 vritual DOM 是否一致，只有当两者不同时，React 才会将 virtual DOM 渲染真实的 DOM 结点，而对 React 进行性能优化的核心就是减少渲染真实 DOM 结点的频率，间接地指出开发者应该准确判断 props 和 state 是否真正发生了变化。
+
+在比对新旧 vritual DOM 和渲染真实 DOM 前，React 为开发者提供了 shouldComponentUpdate() 方法中断接下来的比对和渲染操作，默认情况下，该方法总会返回 true，如果它返回 false，则不执行比对和渲染操作：
+
+```js
+// 最简单的实现：
+shouldComponentUpdate (nextProps) {
+    return this.props.value !== nextProps.value;
+}
+```
+
+看起来挺简单，实在不然。当我们需要比对的值是对象、数组等引用值时，就会出现问题
+
+```js
+// 假设 this.props.value 是 { foo: 'bar' }
+// 假设 nextProps.value 是 { foo: 'bar' },
+// 显然这两者引用的内存地址不同，但它们具有相同的值，这种时候不应该继续执行渲染
+this.props.value !== nextProps.value; // true
+```
+
+如果数据是 Immutable Data 的话，那么数据发生变化就会生成新的对象，开发者只需要检查对象应用是否发生变化即可
+
+```js
+var SomeRecord = Immutable.Record({ foo: null });
+var x = new SomeRecord({ foo: 'bar'  });
+var y = x.set('foo', 'baz');
+x === y; // false
+```
+
+处理这一问题的另一种方式是通过 setter 设置 flag 对脏数据进行检查，但冗杂的代码是在让人头疼
+
+### 总结
+
+Immutable.js 所提供的 Immutable Data 和 JavaScript 固有的 Mutable Data 各有优势，未来 ECAMScript 有可能制定一套原生的 Immutable Data 规范，在这之前，Immutable.js 是一个不错的选择。之前已经写文章熟悉过 Lodash 这一工具库，Immutable 内部也封装了诸多常用的数据操作函数，所以如果让我来选择的话，在 React 技术栈中我会更偏爱 Immutable。
 
 
 ### 参考资料
