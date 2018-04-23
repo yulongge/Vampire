@@ -6,7 +6,8 @@ Immutable数据就是一旦创建，就不能更改的数据。每当对Immutabl
 
 有人说 Immutable 可以给 React 应用带来数十倍的提升，也有人说 Immutable 的引入是近期 JavaScript 中伟大的发明，因为同期 React 太火，它的光芒被掩盖了。这些至少说明 Immutable 是很有价值的。
 
-##### 我们为什么需要不可更改是数据？
+> 我们为什么需要不可更改是数据？
+
 
 ###### Mutable
 
@@ -31,134 +32,6 @@ obj.a //999
 一般的解法就是使用「深拷贝」(deep copy)而非浅拷贝(shallow copy)，来避免被修改,但是这样造成了 CPU和内存的浪费.
 
 > 对数组，对象，对象数组，进行简单的赋值运算只是创建了一份原有内容的引用，指向的任然是同一块内存区域，修改时会对应修改原内容，而有时候我们的需要独立，彼此互补影响，这就需要对他们进行深拷贝。
-
-###### 普通数组
-
-1.遍历复制
-
-```js
-var arr1 = ["a", "b"], arr2 = [];
-for (var item in arr1) arr2[item] = arr1[item];
-arr2[1] = "c";
-arr1   // => ["a", "b"]
-arr2   // => ["a", "c"]
-```
-这种方式简单粗暴，考虑到多维数组，可以用递归来实现
-
-```js
-function arrDeepCopy(source){
-    var sourceCopy = [];
-    for (var item in source) {
-        sourceCopy[item] = typeof source[item] === "object" ? arrDeepCopy(source[item]) : source[item]
-    }
-    return sourceCopy;
-}
-```
-
-2.slice()
-
-> arrayObject.slice(start, end)，方法返回一个新的数组，包含从 start 到 end （不包括该元素）的 arrayObject 中的元素。该方法并不会修改数组，而是返回一个子数组。
-
-```js
-arr2 = arr1.slice(0);
-arr2[1] = "c";
-arr1   // => ["a", "b"]
-arr2   // => ["a", "c"]
-```
-3.concat()
-
-> arrayObject.concat(arrayX,arrayX,......,arrayX), 该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。
-
-```js
-arr2 = arr1.concat();
-arr2[1] = "c";
-arr1   // => ["a", "b"]
-arr2   // => ["a", "c"]
-```
-###### 对象
-
-1.浅拷贝
-
-```js
-var obj = { "a": 1, "b": 2 };
-```
-
-```js
-var objCopy = obj;
-objCopy.b = 3;
-obj   // => { "a": 1, "b": 3 }
-objCopy   // => { "a": 1, "b": 3 }
-```
-> 同样，简单的赋值运算只是创建了一份浅拷贝
-
-2.深拷贝
-
-> 而对于对象的深拷贝，没有内置方法可以使用，我们可以自己命名一个函数进行这一操作
-
-```js
-var objDeepCopy = function(source){
-    var sourceCopy = {};
-    for (var item in source) sourceCopy[item] = typeof source[item] === 'object' ? objDeepCopy(source[item]) : source[item];
-    return sourceCopy;
-}
-var objCopy = objDeepCopy(obj);
-objCopy.a.a1[1] = "a13";
-obj   // => { "a": { "a1": ["a11", "a12"], "a2": 1 }, "b": 2 }
-objCopy   // => { "a": { "a1": ["a11", "a13"], "a2": 1 }, "b": 2 }
-```
-
-对象数组(复杂型)
-
-```js
-var objDeepCopy = function (source) {
-    var sourceCopy = source instanceof Array ? [] : {};
-    for (var item in source) {
-        sourceCopy[item] = typeof source[item] === 'object' ? objDeepCopy(source[item]) : source[item];
-    }
-    return sourceCopy;
-}
-var objCopy = objDeepCopy(obj);
-objCopy[0].a.a1[1] = "a13";
-objCopy[1][1].e = "6";
-obj   // => [{ "a": { "a1": ["a11", "a12"], "a2": 1 }, "b": 2 }, ["c", { "d": 4, "e": 5 }]]
-objCopy   // => [{ "a": { "a1": ["a11", "a13"], "a2": 1 }, "b": 2 }, ["c", { "d": 4, "e": 6 }]]
-```
-
-日常用的库函数
-
-Object.assign()
-
-> es6语法,copy可枚举的属性，也是一种浅copy
-
-```js
-  Object.assign(target, ...sources);
-```
-
-_clone
-
-> lodash方法,默认浅copy,第二个参数可以设置深浅
-
-```js
-  _clone(value, [isDeep], [customizer], [thisArg]);
-```
-
-- _cloneDeep
-
-> lodash方法，深copy
-
-```js
-  _cloneDeep(value, [customizer], [thisArg]);
-```
-
-extend
-
-> jquery方法，第一个参数可以设置是否深浅copy
-
-```js
-  jQuery.extend(true, { a : { a : "a" } }, { a : { b : "b" } } );
-  jQuery.extend( { a : { a : "a" } }, { a : { b : "b" } } );
-```
-
 
 ##### Immutable 可以很好地解决这些问题
 
@@ -206,10 +79,6 @@ const obj = Immutable.fromJS({a:'123',b:'234'},function (key, value, path) {
 `用法` : `value.toJS()`
 `简介` : value是要转变的数据
 
-```js
-
-```
-
 `3. is()`
 
 `作用` : 对两个对象进行比较
@@ -226,7 +95,6 @@ is(map1, map2) // true
 ```
 
 `4. List`
-
 `作用` : 用来创建一个新的List
 `用法` : 
 
@@ -405,32 +273,6 @@ Repeat('foo', 3);
 
 类似 Range() 和 Repeat(value) 这样生成无限长度集合的操作，内部都存在惰性计算的机制，只有真实取值时才会生成相应的结果。使用 ES6 中的 Generator 函数，可以轻松实现一个惰性计算
 
-```js
-for (let i = 0; i < 10; i++) {
-    console.log(arr.next());
-}
-// bigArr(0): 0
-// => { value: 0, done: false }
-// => bigArr(1): 1
-// => { value: 1, done: false }
-// => bigArr(2): 2
-// => { value: 2, done: false }
-// => bigArr(3): 3
-// => { value: 3, done: false }
-// => bigArr(4): 4
-// => { value: 4, done: false }
-// => bigArr(5): 5
-// => { value: 5, done: false }
-// => bigArr(6): 6
-// => { value: 6, done: false }
-// => bigArr(7): 7
-// => { value: 7, done: false }
-// => bigArr(8): 8
-// => { value: 8, done: false }
-// => bigArr(9): 9
-// => { value: 9, done: false }
-```
-
 `9. Record`
 
 Record 在表现上类似于 ES6 中的 Class，但在某些细节上还有所不同。通过 Record() 可以创建一个新的 Record 类，使用该类可以创建具体的 Record 实例，该实例包含在 Record() 构造函数中声明的所有属性和默认值。如果 Record 实例中的某个属性被删除了，则只会讲实例中的属性值恢复为默认值：
@@ -534,9 +376,41 @@ x === y; // false
 
 处理这一问题的另一种方式是通过 setter 设置 flag 对脏数据进行检查，但冗杂的代码是在让人头疼
 
+### `seamless-immutable`
+
+与 Immutable.js 学院派的风格不同，
+seamless-immutable 并没有实现完整的 Persistent Data Structure，而是使用 Object.defineProperty（因此只能在 IE9 及以上使用）扩展了 JavaScript 的 Array 和 Object 对象来实现，只支持 Array 和 Object 两种数据类型，
+API 基于与 Array 和 Object 操持不变。
+代码库非常小，压缩后下载只有 2K。而 Immutable.js 压缩后下载有 16K。
+
+```js
+// 原来的写法
+let foo = {a: {b: 1}};
+let bar = foo;
+bar.a.b = 2;
+console.log(foo.a.b);  // 打印 2
+console.log(foo === bar);  //  打印 true
+
+// 使用 immutable.js 后
+import Immutable from 'immutable';
+foo = Immutable.fromJS({a: {b: 1}});
+bar = foo.setIn(['a', 'b'], 2);   // 使用 setIn 赋值
+console.log(foo.getIn(['a', 'b']));  // 使用 getIn 取值，打印 1
+console.log(foo === bar);  //  打印 false
+
+// 使用  seamless-immutable.js 后
+import SImmutable from 'seamless-immutable';
+foo = SImmutable({a: {b: 1}})
+bar = foo.merge({a: { b: 2}})   // 使用 merge 赋值
+console.log(foo.a.b);  // 像原生 Object 一样取值，打印 1
+console.log(foo === bar);  //  打印 false
+```
+
 ### 总结
 
-Immutable.js 所提供的 Immutable Data 和 JavaScript 固有的 Mutable Data 各有优势，未来 ECAMScript 有可能制定一套原生的 Immutable Data 规范，在这之前，Immutable.js 是一个不错的选择。之前已经写文章熟悉过 Lodash 这一工具库，Immutable 内部也封装了诸多常用的数据操作函数，所以如果让我来选择的话，在 React 技术栈中我会更偏爱 Immutable。
+Immutable.js 所提供的 Immutable Data 和 JavaScript 固有的 Mutable Data 各有优势，未来 ECAMScript 有可能制定一套原生的 Immutable Data 规范，
+
+在这之前，Immutable.js 是一个不错的选择。之前已经写文章熟悉过 Lodash 这一工具库，Immutable 内部也封装了诸多常用的数据操作函数，所以如果让我来选择的话，在 React 技术栈中我会更偏爱 Immutable。
 
 
 ### 参考资料
