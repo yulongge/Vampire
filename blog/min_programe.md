@@ -19,7 +19,7 @@
 - navigationBarTitleText: 超过字符串长度，小程序会自动加入省略号
 - navigationStyle: 只能在app.json设置
 
-`tabBar`: tab应用，可以用tabBar配置项指定tab栏的表现
+`tabBar`: tab应用，可以用tabBar配置项指定tab栏的表现
 
 - 当设置 position 为 top 时，将不会显示 icon
 - tabBar 中的 list 是一个数组，只能配置最少2个、最多5个 tab，tab 按数组的顺序排序
@@ -88,6 +88,12 @@ WXSS 的用法类似于 CSS，并在 CSS 的基础上，扩展了 rpx 尺寸单�
 WXSS 可以使用内联样式，但这样会影响渲染速度。
 
 每个页面自己的 page.wxss 样式表，会覆盖全局样式表 app.wxss。
+
+不支持级联选择器  
+
+支持标签选择器: view, input ...
+
+本地资源无法通过css获取
 
 ```
 Q：setData方法是有react那样的虚拟dom优化吗？`
@@ -185,6 +191,7 @@ A：有做虚拟DOM的优化，但设置相同数据还是会触发新渲染的�
 - reLaunch 可以打开任意页面。
 - 页面底部的 tabBar 由页面决定，即只要是定义为 tabBar 的页面，底部都有 tabBar。
 - 调用页面路由带的参数可以在目标页面的onLoad中获取。
+- wx.navigateTo 目前页面路径最多只能十层
 
 ### 小程序事件
 
@@ -330,4 +337,6 @@ setTimeout(function() {
 - https://developers.weixin.qq.com/miniprogram/dev/
 - http://www.ifanr.com/minapp/786415
 - https://www.cnblogs.com/lhyforfront/p/7428684.html
+- https://segmentfault.com/a/1190000012282464
+- http://www.cnblogs.com/ihardcoder/p/6097941.html
 
