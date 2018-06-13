@@ -1,11 +1,13 @@
-### 小程序开发-开坑
+### 小程序 - 填坑之路
 
-#### 语法
+> 你能走多远，取决于你填坑的能力有多大!
+
+当然，挖坑者和填坑者经常是同一个人，so...我们开始吧。。。
 
 ##### 代码构成
 
 ###### json
-
+
 1.app.json
 
 `pages`: 接受一个数组，来指定页面路径。数组的第一项代表小程序的初始页面(即默认页面)
@@ -79,10 +81,18 @@ dataset获取
 
 在组件中可以定义数据，这些数据将会通过事件传递给 SERVICE。 书写方式： 以data-开头，多个单词由连字符-链接，不能有大写(大写会自动转成小写)如data-element-type，最终在 event.currentTarget.dataset 中会将连字符转成驼峰elementType
 
-`
-
 ###### wxss
 
+WXSS 的用法类似于 CSS，并在 CSS 的基础上，扩展了 rpx 尺寸单位和样式导入功能。
+
+WXSS 可以使用内联样式，但这样会影响渲染速度。
+
+每个页面自己的 page.wxss 样式表，会覆盖全局样式表 app.wxss。
+
+```
+Q：setData方法是有react那样的虚拟dom优化吗？`
+A：有做虚拟DOM的优化，但设置相同数据还是会触发新渲染的。
+```
 
 
 ###### js
@@ -94,6 +104,8 @@ dataset获取
 ###### wxs
 
 > WXS 代码可以编写在 wxml 文件中的 <wxs> 标签内，或以 .wxs 为后缀名的文件内。
+
+在 android 设备中，小程序里的 wxs 与 js 运行效率无差异，而在 ios 设备中，小程序里的 wxs 会比 js 快 2~20倍。
 
 
 ### 小程序逻辑层
@@ -150,6 +162,10 @@ this.setData({
 > 单次设置的数据不能超过1024kB，请尽量避免一次设置过多的数据
 > 请不要把 data 中任何一项的 value 设为 undefined ，否则这一项将不被设置并可能遗留一些潜在问题
 
+```
+Q：setData方法是有react那样的虚拟dom优化吗？
+A：有做虚拟DOM的优化，但设置相同数据还是会触发新渲染的。
+```
 #### 路由
 
 对于路由的触发方式以及页面生命周期函数如下：
@@ -208,38 +224,110 @@ this.setData({
 ```
 > 可以采用capture-bind、capture-catch关键字，后者将中断捕获阶段和取消冒泡阶段
 
-
-
-bind catch 事件捕获冒泡
-
 ### 组件
+
+> 一些样式，性能，细节
+
+#### button
+
+> button 的边框样式是用`after`实现的。
+
+```css
+button::after {
+  border: none;
+}
+```
+#### input
+
+- placeholder样式：style/class
+- `_searchEvent`
+
+#### form
+
+```html
+<form bindsubmit="submitInfo" report-submit="{{true}}" > 
+  ...
+</form>
+```
+
+这个e.detail.fromId，就是formid，真机才会产生，模拟器中为`the formId is a mock one`
 
 #### swiper
 
-轮播图闪烁问题
+> 如果在 bindchange 的事件回调函数中使用 setData 改变 current 值，则有可能导致 setData 被不停地调用，因而通常情况下请在改变 current 值前检测 source 字段来判断是否是由于用户触摸引起
 
 #### scroll-view
 
-性能问题
+- 使用竖向滚动时，需要给<scroll-view/>一个固定高度，通过 WXSS 设置 height。
+- 在滚动 scroll-view 时会阻止页面回弹，所以在 scroll-view 中滚动，是无法触发 onPullDownRefresh
+- 若要使用下拉刷新，请使用页面的滚动，而不是 scroll-view ，这样也能通过点击顶部状态栏回到页面顶部
 
-#### input
-
-搜索，问题
+- 子项不设置`display:inline-block`会出现滚动条
 
 #### image
 
+> image组件默认宽度300px、高度225px
+
+#### 自定义组件
+
+```
+问: 自定义组件外部view没有正确插入到slot节点内中
+答: 目前开发者工具不会展示 slot 里面的内容和 slot 节点本身，请以页面表现为准。我们之后会改进。
+```
 ### API
 
 #### 跳转(redirect, relaunch...)
 
+> 偶尔的wx.redirectTo 和 wx.reLaunch 失效
+
+貌似是跳的太快，真机没反应过来，这个只要加一个setTimeout就可以
+
+```js
+setTimeout(function() {
+  wx.redirectTo({
+    url: ''
+  })
+}, 200)
+```
+
+#### wx.canIUse
+
+> 判断小程序的API，回调，参数，组件等是否在当前版本可用
+
 #### wx.getExtConfig
 
-请问小程序在未绑定第三方平台的时候是否可以使用API “wx.getExtConfig”获取ext.json中的内容？
+> wx.getExtConfig 暂时无法通过 wx.canIUse 判断是否兼容，开发者需要自行判断 wx.getExtConfig 是否存在来兼容
 
-> 未绑定的话无法获取的 
+```
+问: 请问小程序在未绑定第三方平台的时候是否可以使用API “wx.getExtConfig”获取ext.json中的内容？
+
+答: 未绑定的话无法获取的 
+```
+
+#### storage
+
+> 本地数据存储的大小限制为 10MB
+
+#### scanCode
+
+> 会隐藏小程序，会调用hide方法
+
+- path:当所扫的码为当前小程序的合法二维码时，会返回此字段，内容为二维码携带的 path
+
+#### wx.requestPayment
+
+- package 参数形式: 
+
+> 支付完成，成功页，也会离开小程序，调取hide方法
+
+#### wx.showToast
+
+字数限制7个
+不支持gif图
 
 ### 参考
 
+- https://developers.weixin.qq.com/miniprogram/dev/
 - http://www.ifanr.com/minapp/786415
 - https://www.cnblogs.com/lhyforfront/p/7428684.html
 
