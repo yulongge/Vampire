@@ -24,6 +24,35 @@
 - 当设置 position 为 top 时，将不会显示 icon
 - tabBar 中的 list 是一个数组，只能配置最少2个、最多5个 tab，tab 按数组的顺序排序
 
+- icon 81*81 ?svg
+
+```
+怎么判断一个页面是tabbar页面?
+```
+
+```json
+"tabBar": {
+  "color": "#7F7F7F",
+  "backgroundColor": "#FFF",
+  "selectedColor": "#FD593E",
+  "borderStyle": "black",
+  "list": [
+    {
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "images/tabbar-index-off.png",
+      "selectedIconPath": "images/tabbar-index.png"
+    },
+    {
+      "pagePath": "pages/mine/mine",
+      "text": "会员",
+      "iconPath": "images/tabbar-member-off.png",
+      "selectedIconPath": "images/tabbar-member.png"
+    }
+  ]
+}
+```
+
 `networkTimeout`: 设置各种网络请求的超时时间
 
 - 默认为60000ms
@@ -32,6 +61,8 @@
 2.page.json
 
 > 只是设置`app.json`中window配置项内容
+
+3.component.json
 
 
 ###### wxml
@@ -81,6 +112,8 @@ dataset获取
 
 在组件中可以定义数据，这些数据将会通过事件传递给 SERVICE。 书写方式： 以data-开头，多个单词由连字符-链接，不能有大写(大写会自动转成小写)如data-element-type，最终在 event.currentTarget.dataset 中会将连字符转成驼峰elementType
 
+? 确定大写是否可以
+
 ###### wxss
 
 WXSS 的用法类似于 CSS，并在 CSS 的基础上，扩展了 rpx 尺寸单位和样式导入功能。
@@ -94,11 +127,6 @@ WXSS 可以使用内联样式，但这样会影响渲染速度。
 支持标签选择器: view, input ...
 
 本地资源无法通过css获取
-
-```
-Q：setData方法是有react那样的虚拟dom优化吗？`
-A：有做虚拟DOM的优化，但设置相同数据还是会触发新渲染的。
-```
 
 
 ###### js
@@ -263,6 +291,15 @@ button::after {
 
 > 如果在 bindchange 的事件回调函数中使用 setData 改变 current 值，则有可能导致 setData 被不停地调用，因而通常情况下请在改变 current 值前检测 source 字段来判断是否是由于用户触摸引起
 
+```js
+const {source} = e.detail;
+if(source=="touch" || source=="autoplay"){
+    this.setData({
+        currentSwiper: e.detail.current
+    })
+}
+```
+
 #### scroll-view
 
 - 使用竖向滚动时，需要给<scroll-view/>一个固定高度，通过 WXSS 设置 height。
@@ -323,14 +360,13 @@ setTimeout(function() {
 
 #### wx.requestPayment
 
-- package 参数形式: 
+- package 参数形式: prepay_id=*
 
 > 支付完成，成功页，也会离开小程序，调取hide方法
 
 #### wx.showToast
 
-字数限制7个
-不支持gif图
+- icon不是`none`的时候字数限制7个
 
 ### 参考
 
