@@ -38,3 +38,18 @@ isArrayLike(thing)
 //如果给定的 thing 是 javascript 数组或者 observable (MobX的)数组的话，返回 true
 ```
 
+#### 参考
+
+- https://cn.mobx.js.org/refguide/api
+- https://blog.csdn.net/Jane_96/article/details/82462491
+
+
+
+
+
+
+
+
+
+
+
