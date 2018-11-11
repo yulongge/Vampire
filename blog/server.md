@@ -348,7 +348,15 @@ insert into user (user_name, pic, sex, age, openId, iphone, email, role, login_t
 
 配置我们访问白名单，就可以自由访问了
 
+至此，建站完毕!
+
 ### 参考
+
+- http://www.runoob.com/mysql/mysql-install.html
+- https://help.aliyun.com/document_detail/291065259.1996646101.searchclickresult.4c02735beCiDhH
+- https://www.cnblogs.com/liter7/p/6581344.html
+- https://blog.csdn.net/f826760951/article/details/67639309
+
 
 
 
