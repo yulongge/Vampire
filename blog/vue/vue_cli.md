@@ -88,4 +88,47 @@ vue add @vue/cli-plugin-eslint
 
 如果不带 @vue 前缀，该命令会换作解析一个 unscoped 的包。例如以下命令会安装第三方插件 vue-cli-plugin-apollo
 
+### 使用命令
 
+在一个 Vue CLI 项目中，@vue/cli-service 安装了一个名为 vue-cli-service 的命令。你可以在 npm scripts 中以 vue-cli-service、或者从终端中以 ./node_modules/.bin/vue-cli-service 访问这个命令。
+
+##### vue-cli-service serve
+
+vue-cli-service serve 命令会启动一个开发服务器 (基于 webpack-dev-server) 并附带开箱即用的模块热重载 (Hot-Module-Replacement)。
+
+```sh
+用法：vue-cli-service serve [options] [entry]
+
+选项：
+
+  --open    在服务器启动时打开浏览器
+  --copy    在服务器启动时将 URL 复制到剪切版
+  --mode    指定环境模式 (默认值：development)
+  --host    指定 host (默认值：0.0.0.0)
+  --port    指定 port (默认值：8080)
+  --https   使用 https (默认值：false)
+```
+
+##### vue-cli-service build
+
+vue-cli-service build 会在 dist/ 目录产生一个可用于生产环境的包，带有 JS/CSS/HTML 的压缩，和为更好的缓存而做的自动的 vendor chunk splitting。它的 chunk manifest 会内联在 HTML 里。
+
+```sh
+用法：vue-cli-service build [options] [entry|pattern]
+
+选项：
+
+  --mode        指定环境模式 (默认值：production)
+  --dest        指定输出目录 (默认值：dist)
+  --modern      面向现代浏览器带自动回退地构建应用
+  --target      app | lib | wc | wc-async (默认值：app)
+  --name        库或 Web Components 模式下的名字 (默认值：package.json 中的 "name" 字段或入口文件名)
+  --no-clean    在构建项目之前不清除目标目录
+  --report      生成 report.html 以帮助分析包内容
+  --report-json 生成 report.json 以帮助分析包内容
+  --watch       监听文件变化
+```
+
+##### vue-cli-service inspect
+
+你可以使用 vue-cli-service inspect 来审查一个 Vue CLI 项目的 webpack config
